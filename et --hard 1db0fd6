@@ -1,0 +1,11 @@
+[33m1db0fd6[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{0}: rebase (start): checkout origin/main
+[33mbb729c9[m[33m ([m[1;32mmain[m[33m)[m HEAD@{1}: commit (amend): first commit
+[33m1db0fd6[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{2}: Branch: renamed refs/heads/main to refs/heads/main
+[33m1db0fd6[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{4}: Branch: renamed refs/heads/main to refs/heads/main
+[33m1db0fd6[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{6}: Branch: renamed refs/heads/main to refs/heads/main
+[33m1db0fd6[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{8}: Branch: renamed refs/heads/master to refs/heads/main
+[33m1db0fd6[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{10}: Branch: renamed refs/heads/master to refs/heads/master
+[33m1db0fd6[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{12}: Branch: renamed refs/heads/master to refs/heads/master
+[33m1db0fd6[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{14}: Branch: renamed refs/heads/master to refs/heads/master
+[33m1db0fd6[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{16}: Branch: renamed refs/heads/master to refs/heads/master
+[33m1db0fd6[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{18}: commit (initial): first commit
