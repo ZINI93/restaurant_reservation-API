@@ -18,6 +18,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
@@ -117,6 +119,29 @@ class ReservationServiceImplTest {
 
     @Test
     void searchReservation() {
+        //given
+        PageRequest pageable = PageRequest.of(0, 10);
+
+        String name = "qwas11";
+        String phone = "080-1111-1111";
+        LocalDateTime startTime = LocalDateTime.now().minusDays(1);
+        LocalDateTime endTime = LocalDateTime.now();
+        String sortField = "createAt";
+        ReservationStatus status = ReservationStatus.COMPLETED;
+
+
+        Page<ReservationResponseDto> mockReservationPage = mock(Page.class);
+        when(reservationRepository.reservationSearch(contains(name),contains(phone),eq(startTime),eq(endTime),eq(sortField),eq(status),eq(pageable))).thenReturn(mockReservationPage);
+
+        //when
+        Page<ReservationResponseDto> result = reservationService.SearchReservation(name, phone, startTime, endTime, sortField, status, pageable);
+
+        //then
+        assertNotNull(result);
+        assertSame(mockReservationPage,result);
+
+        verify(reservationRepository, times(1)).reservationSearch(contains(name),contains(phone),eq(startTime),eq(endTime),eq(sortField),eq(status),eq(pageable));
+
     }
 
     @Test

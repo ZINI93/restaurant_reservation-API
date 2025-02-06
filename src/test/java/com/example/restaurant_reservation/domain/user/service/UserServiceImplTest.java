@@ -106,7 +106,7 @@ class UserServiceImplTest {
         String phoneNumber = "080-1111-1111";
 
         Page<UserResponseDto> mockUserPage = mock(Page.class);
-        when(userRepository.searchUser(eq(username),eq(name),eq(phoneNumber),eq(pageable))).thenReturn(mockUserPage);
+        when(userRepository.searchUser(eq(username),contains(name),contains(phoneNumber),eq(pageable))).thenReturn(mockUserPage);
 
 
 
@@ -117,7 +117,7 @@ class UserServiceImplTest {
 
         assertNotNull(result);
         assertSame(mockUserPage,result);
-        verify(userRepository, times(1)).searchUser(eq(username),eq(name),eq(phoneNumber),eq(pageable));
+        verify(userRepository, times(1)).searchUser(eq(username),contains(name),contains(phoneNumber),eq(pageable));
     }
 
     @Test

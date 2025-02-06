@@ -18,6 +18,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -103,8 +105,22 @@ class PaymentServiceImplTest {
     @Test
     void paymentSearch() {
         //given
+        PageRequest pageable = PageRequest.of(0, 10);
+
+        Long reservationId =1L;
+        PaymentStatus status = PaymentStatus.COMPLETED;
+
+        Page<PaymentResponseDto> mockPaymentPage = mock(Page.class);
+        when(paymentRepository.paymentSearch(eq(reservationId),eq(status),eq(pageable))).thenReturn(mockPaymentPage);
+
         //when
+        Page<PaymentResponseDto> result = paymentService.paymentSearch(reservationId, status, pageable);
+
         //then
+        assertNotNull(result);
+        assertSame(mockPaymentPage, result);
+
+        verify(paymentRepository, times(1)).paymentSearch(eq(reservationId),eq(status),eq(pageable));
     }
 
     @Test
