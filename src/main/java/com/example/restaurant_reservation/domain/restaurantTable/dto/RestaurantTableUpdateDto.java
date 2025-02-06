@@ -14,6 +14,7 @@ public class RestaurantTableUpdateDto {
     private boolean isAvailable;
 
 
+    @Builder
     public RestaurantTableUpdateDto(String tableNumber, String capacity, boolean isAvailable) {
         this.tableNumber = tableNumber;
         this.capacity = capacity;
