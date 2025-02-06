@@ -10,11 +10,15 @@ import com.example.restaurant_reservation.domain.user.repository.UserRepository;
 import com.example.restaurant_reservation.domain.user.repository.UserRepositoryImpl;
 import org.apache.coyote.Request;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
@@ -93,12 +97,27 @@ class UserServiceImplTest {
     }
 
     @Test
-    void searchMember() {
+    void searchUser() {
         //given
+        PageRequest pageable = PageRequest.of(0, 10);
+
+        String username = "qwas111";
+        String name = "zini";
+        String phoneNumber = "080-1111-1111";
+
+        Page<UserResponseDto> mockUserPage = mock(Page.class);
+        when(userRepository.searchUser(eq(username),eq(name),eq(phoneNumber),eq(pageable))).thenReturn(mockUserPage);
+
+
 
         //when
+        Page<UserResponseDto> result = userService.SearchUser(username,name,phoneNumber,pageable);
 
         //then
+
+        assertNotNull(result);
+        assertSame(mockUserPage,result);
+        verify(userRepository, times(1)).searchUser(eq(username),eq(name),eq(phoneNumber),eq(pageable));
     }
 
     @Test

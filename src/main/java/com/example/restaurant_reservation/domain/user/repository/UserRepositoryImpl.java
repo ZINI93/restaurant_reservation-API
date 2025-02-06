@@ -21,7 +21,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
 
 
     @Override
-    public Page<UserResponseDto> searchMember(String username, String name, String phone, Pageable pageable) {
+    public Page<UserResponseDto> searchUser(String username, String name, String phone, Pageable pageable) {
         //　List<MemberResponseDto> content 조회 부분
         List<UserResponseDto> content = queryFactory
                 .select(new QUserResponseDto(

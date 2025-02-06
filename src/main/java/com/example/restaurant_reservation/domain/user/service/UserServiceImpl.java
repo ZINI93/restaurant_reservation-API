@@ -54,8 +54,8 @@ public class UserServiceImpl implements UserService {
 
     //　ユーザー（ID, お名前、電話番号)で検索
     @Override
-    public Page<UserResponseDto> SearchMember(String username, String name, String phone, Pageable pageable) {
-        return userRepository.searchMember(username,name,phone,pageable);
+    public Page<UserResponseDto> SearchUser(String username, String name, String phone, Pageable pageable) {
+        return userRepository.searchUser(username,name,phone,pageable);
     }
 
     //ユーザー情報をアップデート

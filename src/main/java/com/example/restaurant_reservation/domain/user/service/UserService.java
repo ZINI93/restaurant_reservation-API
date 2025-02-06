@@ -12,7 +12,7 @@ public interface UserService {
 
     UserResponseDto findById(Long userId);
 
-    Page<UserResponseDto> SearchMember(String username, String name , String phone, Pageable pageable);
+    Page<UserResponseDto> SearchUser(String username, String name , String phone, Pageable pageable);
 
     UserResponseDto updateUser(Long userId, UserUpdateDto updateDto);
 

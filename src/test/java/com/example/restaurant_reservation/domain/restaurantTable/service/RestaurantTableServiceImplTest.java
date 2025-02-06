@@ -110,7 +110,6 @@ class RestaurantTableServiceImplTest {
         assertNotNull(result);
         assertEquals("2번", result.getTableNumber());
         assertEquals(false, result.isAvailable());
-
     }
 
     @Test
