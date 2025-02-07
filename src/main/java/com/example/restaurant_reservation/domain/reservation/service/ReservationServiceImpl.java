@@ -60,7 +60,7 @@ public class ReservationServiceImpl implements ReservationService{
 
     // 予約(名前、電話番号、予約時間、予約のステータスで予約）検索
     @Override
-    public Page<ReservationResponseDto> SearchReservation(String name, String phone, LocalDateTime startTime, LocalDateTime endTime, String sortField, ReservationStatus status, Pageable pageable) {
+    public Page<ReservationResponseDto> searchReservation(String name, String phone, LocalDateTime startTime, LocalDateTime endTime, String sortField, ReservationStatus status, Pageable pageable) {
         return reservationRepository.reservationSearch(name, phone, startTime, endTime,sortField,status,pageable);
     }
 
