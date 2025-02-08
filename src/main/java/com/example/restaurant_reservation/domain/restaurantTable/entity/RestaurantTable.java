@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Table(name ="restaurant_table")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RestaurantTable extends TimeStamp {
     @Id
@@ -19,12 +20,12 @@ public class RestaurantTable extends TimeStamp {
 
     private String tableNumber;
 
-    private String capacity;
+    private int capacity;
 
     private boolean isAvailable;
 
     @Builder
-    public RestaurantTable(String tableNumber, String capacity, boolean isAvailable) {
+    public RestaurantTable(String tableNumber, int capacity, boolean isAvailable) {
         this.tableNumber = tableNumber;
         this.capacity = capacity;
         this.isAvailable = isAvailable;
@@ -38,9 +39,9 @@ public class RestaurantTable extends TimeStamp {
                 .build();
     }
 
-    public void  updateInfo(String tableNumber, String capacity, boolean isAvailable) {
+    public void  updateInfo(String tableNumber, int capacity, boolean isAvailable) {
         if (tableNumber != null) this.tableNumber = tableNumber;
-        if (capacity != null)this.capacity = capacity;
+        this.capacity = capacity;
         this.isAvailable = isAvailable;
     }
 

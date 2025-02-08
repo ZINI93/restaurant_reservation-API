@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Table(name = "reservation")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation extends TimeStamp {
     @Id
@@ -38,6 +39,7 @@ public class Reservation extends TimeStamp {
     private int numPeople;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
 

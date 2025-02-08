@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Getter
+@Table(name = "payment")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Payment extends TimeStamp {
 
@@ -28,8 +29,10 @@ public class Payment extends TimeStamp {
 
     private BigDecimal amount;
 
+    @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
+    @Enumerated(EnumType.STRING)
     private PaymentStatus status;
 
 

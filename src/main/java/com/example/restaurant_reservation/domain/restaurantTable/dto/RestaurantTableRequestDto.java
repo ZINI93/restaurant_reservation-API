@@ -9,12 +9,12 @@ public class RestaurantTableRequestDto {
 
     private String tableNumber;
 
-    private String capacity;
+    private int capacity;
 
     private boolean isAvailable;
 
     @Builder
-    public RestaurantTableRequestDto(String tableNumber, String capacity, boolean isAvailable) {
+    public RestaurantTableRequestDto(String tableNumber, int capacity, boolean isAvailable) {
         this.tableNumber = tableNumber;
         this.capacity = capacity;
         this.isAvailable = isAvailable;

@@ -8,12 +8,12 @@ public class RestaurantTableResponseDto {
 
     private Long id;
     private String tableNumber;
-    private String capacity;
+    private int capacity;
     private boolean isAvailable;
 
 
     @Builder
-    public RestaurantTableResponseDto(String tableNumber, String capacity, boolean isAvailable) {
+    public RestaurantTableResponseDto(String tableNumber, int capacity, boolean isAvailable) {
         this.tableNumber = tableNumber;
         this.capacity = capacity;
         this.isAvailable = isAvailable;
