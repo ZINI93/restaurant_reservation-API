@@ -23,7 +23,7 @@ public class Payment extends TimeStamp {
     @Column(name = "payment_id", nullable = false)
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id",nullable = false)
     private Reservation reservation;
 

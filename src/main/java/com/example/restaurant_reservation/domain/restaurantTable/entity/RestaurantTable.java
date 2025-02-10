@@ -8,20 +8,23 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name ="restaurant_table")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 public class RestaurantTable extends TimeStamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RestaurantTable_id", nullable = false)
+    @Column(name = "restaurant_table_id", nullable = false)
     private Long id;
 
+    @Column(name = "table_number", nullable = false)
     private String tableNumber;
 
+    @Column(nullable = false)
     private int capacity;
 
+    @Column(name = "is_available",nullable = false)
     private boolean isAvailable;
 
     @Builder

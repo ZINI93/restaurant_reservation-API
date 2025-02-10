@@ -10,32 +10,31 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.awt.desktop.PrintFilesEvent;
-import java.nio.channels.Pipe;
 import java.time.LocalDateTime;
 
-@Entity
+
 @Getter
-@Table(name = "reservation")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "reservation")
+@Entity
 public class Reservation extends TimeStamp {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id", nullable = false)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurantTable_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_table_id")
     private RestaurantTable restaurantTable;
 
-    @Column(nullable = false)
+    @Column(name = "reservation_time",nullable = false)
     private LocalDateTime reservationTime;
 
-    @Column(nullable = false)
+    @Column(name = "num_people", nullable = false)
     private int numPeople;
 
     @Column(nullable = false)
