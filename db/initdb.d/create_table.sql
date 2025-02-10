@@ -1,43 +1,42 @@
 CREATE TABLE `users` (
     `user_id`  BIGINT AUTO_INCREMENT PRIMARY KEY,
     `username` VARCHAR(255) NOT NULL UNIQUE,
+    `password` VARCHAR(255) NOT NULL,
+    `name`     VARCHAR(50)  NOT NULL,
     `email`    VARCHAR(255) NOT NULL UNIQUE,
     `phone`    VARCHAR(20)  NOT NULL UNIQUE,
-    `name`     VARCHAR(50)  NOT NULL,
-    `password` VARCHAR(255) NOT NULL,
     `role`     VARCHAR(50)  NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
     CONSTRAINT `chk_user_role` CHECK (`role` IN ('USER', 'ADMIN'))
 );
 
 CREATE TABLE `restaurant_table` (
-    `restaurantTable_id` BIGINT AUTO_INCREMENT PRIMARY KEY,
-    `tableNumber` VARCHAR(100) NOT NULL,
+
+    `restaurant_table_id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `table_number` VARCHAR(100) NOT NULL,
     `capacity` INT NOT NULL,
-    `isAvailable` BOOLEAN NOT NULL
+    `is_available` BOOLEAN NOT NULL,
+
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
 );
 
 CREATE TABLE `reservation` (
     `reservation_id` BIGINT AUTO_INCREMENT PRIMARY KEY,
     `user_id` BIGINT NOT NULL,
-    `restaurantTable_id` BIGINT NOT NULL,
-    `reservationTime` DATETIME NOT NULL,
-    `numPeople` INT NOT NULL,
-    `status` VARCHAR(50) NOT NULL,
+    `restaurant_table_id` BIGINT NOT NULL,
+    `reservation_time` DATETIME NOT NULL,
+    `num_people` INT UNSIGNED NOT NULL,
+    `status` ENUM('PENDING', 'CONFIRMED', 'CANCELLED', 'COMPLETED') NOT NULL,
 
-    CONSTRAINT `fk_user_id`
-        FOREIGN KEY (`user_id`)
-        REFERENCES `users`(`user_id`)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    CONSTRAINT `fk_restaurantTable_id`
-        FOREIGN KEY (`restaurantTable_id`)
-        REFERENCES `restaurantTable`(`restaurantTable_id`)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-
-    CONSTRAINT `chk_reservation_status`
-        CHECK (`ReservationStatus` IN ('PENDING', 'CONFIRMED', 'CANCELLED', 'COMPLETED'))
+    CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_restaurant_table_id` FOREIGN KEY(`restaurant_table_id`) REFERENCES `restaurant_table`(`restaurant_table_id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `payment` (
@@ -46,6 +45,9 @@ CREATE TABLE `payment` (
     `amount` DECIMAL(10, 2) NOT NULL,
     `paymentMethod` VARCHAR(50) NOT NULL,
     `status` VARCHAR(50) NOT NULL,
+
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     CONSTRAINT `fk_reservation_id`
         FOREIGN KEY (`reservation_id`)
