@@ -8,10 +8,10 @@ services:
       - ./db/conf.d:/etc/mysql/conf.d
       - ./db/initdb.d:/docker-entrypoint-initdb.d
     ports:
-      - "3308:3306"
+      - "3306:3306"
     environment:
-      - MYSQL_DATABASE=restaurant_reservation
-      - MYSQL_USER=zini_reservation_user
-      - MYSQL_PASSWORD=kukugi251001
-      - MYSQL_ROOT_PASSWORD=zini0529
+      - MYSQL_DATABASE=zini_shop
+      - MYSQL_USER=zini_show_user
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=shop0320
       - TZ=Asia/Seoul
