@@ -10,8 +10,8 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_DATABASE=reservation_api
-      - MYSQL_USER=reservation_api_user
-      - MYSQL_PASSWORD=kukugi251001
-      - MYSQL_ROOT_PASSWORD=shop0320
+      - MYSQL_DATABASE=
+      - MYSQL_USER=
+      - MYSQL_PASSWORD=
+      - MYSQL_ROOT_PASSWORD=
       - TZ=Asia/Seoul
