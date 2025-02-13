@@ -5,7 +5,6 @@ import com.example.restaurant_reservation.domain.restaurantTable.dto.RestaurantT
 import com.example.restaurant_reservation.domain.restaurantTable.dto.RestaurantTableResponseDto;
 import com.example.restaurant_reservation.domain.restaurantTable.dto.RestaurantTableUpdateDto;
 import com.example.restaurant_reservation.domain.restaurantTable.service.RestaurantTableService;
-import com.example.restaurant_reservation.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/restaurant_table")
+@RequestMapping("/api/admin/restaurant_table")
 @RestController
 public class RestaurantTableApiController {
 

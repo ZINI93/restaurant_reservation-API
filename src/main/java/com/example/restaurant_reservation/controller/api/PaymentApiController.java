@@ -3,11 +3,8 @@ package com.example.restaurant_reservation.controller.api;
 import com.example.restaurant_reservation.domain.payment.dto.PaymentRequestDto;
 import com.example.restaurant_reservation.domain.payment.dto.PaymentResponseDto;
 import com.example.restaurant_reservation.domain.payment.dto.PaymentUpdateDto;
-import com.example.restaurant_reservation.domain.payment.entity.PaymentStatus;
 import com.example.restaurant_reservation.domain.payment.service.PaymentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,15 +31,7 @@ public class PaymentApiController {
         return ResponseEntity.ok(payment);
     }
 
-    @GetMapping
-    public ResponseEntity<Page<PaymentResponseDto>>paymentSearch(@RequestParam(required = false) Long reservationId,
-                                                                  @RequestParam(required = false) PaymentStatus status,
-                                                                  @RequestParam(required = false) Pageable pageable){
 
-        Page<PaymentResponseDto> payment = paymentService.paymentSearch(reservationId, status, pageable);
-
-        return ResponseEntity.ok(payment);
-    }
 
     @PutMapping("{paymentId}")
     public ResponseEntity<PaymentResponseDto>updatePayment(@PathVariable Long paymentId,

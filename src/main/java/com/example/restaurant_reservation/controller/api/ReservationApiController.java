@@ -3,16 +3,12 @@ package com.example.restaurant_reservation.controller.api;
 import com.example.restaurant_reservation.domain.reservation.dto.ReservationRequestDto;
 import com.example.restaurant_reservation.domain.reservation.dto.ReservationResponseDto;
 import com.example.restaurant_reservation.domain.reservation.dto.ReservationUpdateDto;
-import com.example.restaurant_reservation.domain.reservation.entity.ReservationStatus;
 import com.example.restaurant_reservation.domain.reservation.service.ReservationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/reservation")
@@ -37,21 +33,6 @@ public class ReservationApiController {
 
         return ResponseEntity.ok(reservation);
     }
-
-    @GetMapping
-    public ResponseEntity<Page<ReservationResponseDto>> searchReservation(@RequestParam(required = false) String name,
-                                                                          @RequestParam(required = false) String phone,
-                                                                          @RequestParam(required = false) LocalDateTime startTime,
-                                                                          @RequestParam(required = false) LocalDateTime endTime,
-                                                                          @RequestParam(required = false) ReservationStatus status,
-                                                                          @RequestParam(required = false) String sortField,
-                                                                          @RequestParam(required = false) Pageable pageable){
-
-        Page<ReservationResponseDto> reservation = reservationService.searchReservation(name, phone, startTime, endTime, sortField, status, pageable);
-
-        return ResponseEntity.ok(reservation);
-    }
-
 
     @PutMapping("{reservationId}")
     public ResponseEntity<ReservationResponseDto> updateReservation(@PathVariable Long reservationId,
