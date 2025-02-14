@@ -14,7 +14,7 @@ public interface ReservationService {
 
     ReservationResponseDto createReservation(ReservationRequestDto reservationRequestDto);
     ReservationResponseDto findById(Long reservationId);
-
+    ReservationResponseDto findByPaymentId(Long paymentId);
     Page<ReservationResponseDto> searchReservation(String name, String phone, LocalDateTime startTime, LocalDateTime endTime, String sortField, ReservationStatus status, Pageable pageable);
     ReservationResponseDto updateReservation(Long reservationId, ReservationUpdateDto updateDto);
     void deleteReservation(Long reservationId);

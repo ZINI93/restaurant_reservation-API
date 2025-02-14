@@ -1,34 +1,46 @@
 package com.example.restaurant_reservation.domain.user.service;
 
+import com.example.restaurant_reservation.domain.reservation.entity.Reservation;
+import com.example.restaurant_reservation.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.nio.file.attribute.PosixFileAttributes;
 import java.util.Collection;
 import java.util.Collections;
 
 
 @RequiredArgsConstructor
-public class UserPrincipal implements UserDetails {
+public class CustomUserDetails implements UserDetails {
 
-    private final String username;
+    private final User user;
 
-    public final String password;
+    public Long getUserId(){
+        return user.getId();
+    }
+    public String getEmail(){
+        return user.getEmail();
+    }
+    public String getPhone(){
+        return user.getPhone();
+    }
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return user.getUsername();
     }
 
     @Override

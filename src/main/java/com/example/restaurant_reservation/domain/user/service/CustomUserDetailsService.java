@@ -18,7 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return userRepository.findByUsername(username)
                 .map(user -> {
                     System.out.println("DB에서 찾은 사용자: " + user.getUsername());
-                    return new UserPrincipal(user.getUsername(), user.getPassword());
+                    return new CustomUserDetails(user);
                 })
                 .orElseThrow(() -> {
                     System.out.println("사용자를 찾을 수 없음: " + username);

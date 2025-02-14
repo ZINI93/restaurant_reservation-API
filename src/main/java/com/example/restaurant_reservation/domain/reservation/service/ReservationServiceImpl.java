@@ -1,5 +1,7 @@
 package com.example.restaurant_reservation.domain.reservation.service;
 
+import com.example.restaurant_reservation.domain.payment.entity.Payment;
+import com.example.restaurant_reservation.domain.payment.repository.PaymentRepository;
 import com.example.restaurant_reservation.domain.reservation.dto.ReservationRequestDto;
 import com.example.restaurant_reservation.domain.reservation.dto.ReservationResponseDto;
 import com.example.restaurant_reservation.domain.reservation.dto.ReservationUpdateDto;
@@ -26,6 +28,7 @@ import java.time.LocalDateTime;
 public class ReservationServiceImpl implements ReservationService{
 
     private final ReservationRepository reservationRepository;
+    private final PaymentRepository paymentRepository;
     private final UserRepository userRepository;
     private final RestaurantTableRepository restaurantTableRepository;
 
@@ -56,6 +59,18 @@ public class ReservationServiceImpl implements ReservationService{
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new IllegalArgumentException("予約 ID が見つかりません。"));
         return reservation.toResponse();
+    }
+
+    @Override
+    public ReservationResponseDto findByPaymentId(Long paymentId) {
+        Payment payment = paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new IllegalArgumentException("支払いidがありません。"));
+
+        // payment null check
+        if (payment.getReservation() == null){
+            throw new IllegalArgumentException("この支払いには対応する予約がありません。");
+        }
+        return payment.getReservation().toResponse();
     }
 
     // 予約(名前、電話番号、予約時間、予約のステータスで予約）検索

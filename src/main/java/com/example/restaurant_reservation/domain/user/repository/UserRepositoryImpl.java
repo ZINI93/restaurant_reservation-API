@@ -71,7 +71,6 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                 .map(user.phone::contains)
                 .orElse(Expressions.TRUE);
     }
-
         private BooleanExpression usernameEq(String username) {
             return Optional.ofNullable(username)
                     .map(user.username::contains)

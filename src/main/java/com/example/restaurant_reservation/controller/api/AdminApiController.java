@@ -11,6 +11,7 @@ import com.example.restaurant_reservation.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,11 +29,11 @@ public class AdminApiController {
     //USER- ADMIN
 
     // ユーザーをサーチ　
-    @GetMapping("/user/search-user")
+    @GetMapping("/user/search")  //?page=0&size=10
     public ResponseEntity<Page<UserResponseDto>> searchUser(@RequestParam(required = false) String username,
                                                             @RequestParam(required = false) String name,
                                                             @RequestParam(required = false)String phone,
-                                                            @RequestParam(required = false) Pageable pageable){
+                                                            @PageableDefault(size = 10, page = 0) Pageable pageable){
         Page<UserResponseDto> user = userService.SearchUser(username, name, phone, pageable);
 
         return ResponseEntity.ok(user);
@@ -61,6 +62,16 @@ public class AdminApiController {
         Page<ReservationResponseDto> reservation = reservationService.searchReservation(name, phone, startTime, endTime, sortField, status, pageable);
 
         return ResponseEntity.ok(reservation);
+    }
+
+
+    @DeleteMapping("{reservationId}")
+    public ResponseEntity<Void> deleteReservation(@PathVariable Long reservationId){
+
+
+        reservationService.deleteReservation(reservationId);
+
+        return ResponseEntity.noContent().build();
     }
 
     //PAYMENT - ADMIN
