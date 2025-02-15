@@ -2,6 +2,7 @@ package com.example.restaurant_reservation.domain.reservation.service;
 
 import com.example.restaurant_reservation.domain.payment.entity.Payment;
 import com.example.restaurant_reservation.domain.payment.repository.PaymentRepository;
+import com.example.restaurant_reservation.domain.reservation.dto.AdminReservationRequestDto;
 import com.example.restaurant_reservation.domain.reservation.dto.ReservationRequestDto;
 import com.example.restaurant_reservation.domain.reservation.dto.ReservationResponseDto;
 import com.example.restaurant_reservation.domain.reservation.dto.ReservationUpdateDto;
@@ -35,8 +36,29 @@ public class ReservationServiceImpl implements ReservationService{
 
     // 予約を作成する
     @Override @Transactional
-    public ReservationResponseDto createReservation(ReservationRequestDto reservationRequestDto) {
+    public ReservationResponseDto createReservation(ReservationRequestDto reservationRequestDto,Long userId) {
 
+        //controllerからもらったユーザを使う
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("ユーザーIDが見つかりません。"));
+
+        RestaurantTable restaurantTable = restaurantTableRepository.findById(reservationRequestDto.getRestaurantTableId())
+                .orElseThrow(() -> new IllegalArgumentException("restaurantTableIdが見つかりません。"));
+
+        Reservation savedReservation = Reservation.builder()
+                .user(user)
+                .restaurantTable(restaurantTable)
+                .reservationTime(reservationRequestDto.getReservationTime())
+                .numPeople(reservationRequestDto.getNumPeople())
+                .status(ReservationStatus.COMPLETED)
+                .build();
+
+        return reservationRepository.save(savedReservation).toResponse();
+    }
+
+    @Override
+    public ReservationResponseDto AdminCreateReservation(AdminReservationRequestDto reservationRequestDto) {
+        //controllerからもらったユーザを使う
         User user = userRepository.findById(reservationRequestDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("ユーザーIDが見つかりません。"));
 
@@ -53,6 +75,8 @@ public class ReservationServiceImpl implements ReservationService{
 
         return reservationRepository.save(savedReservation).toResponse();
     }
+
+
     // 予約IDで予約を検索
     @Override
     public ReservationResponseDto findById(Long reservationId) {

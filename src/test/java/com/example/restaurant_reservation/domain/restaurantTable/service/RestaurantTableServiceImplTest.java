@@ -45,7 +45,7 @@ class RestaurantTableServiceImplTest {
 
         table = new RestaurantTable(
                 "1번",
-                "10명",
+                10,
                 true
         );
         setId(table,1L);
@@ -70,7 +70,7 @@ class RestaurantTableServiceImplTest {
         //then
         assertNotNull(result);
         assertEquals("1번",result.getTableNumber());
-        assertEquals("10명",result.getCapacity());
+        assertEquals(10,result.getCapacity());
 
         verify(restaurantTableRepository,times(1)).save(any(RestaurantTable.class));
 
@@ -88,7 +88,7 @@ class RestaurantTableServiceImplTest {
 
         //then
         assertNotNull(result);
-        assertEquals("10명", result.getCapacity());
+        assertEquals(10, result.getCapacity());
 
         verify(restaurantTableRepository, times(1)).findById(1L);
     }
@@ -98,7 +98,7 @@ class RestaurantTableServiceImplTest {
         //given
         RestaurantTableUpdateDto updatedto = RestaurantTableUpdateDto.builder()
                 .tableNumber("2번")
-                .capacity("5명")
+                .capacity(5)
                 .isAvailable(false).build();
 
         when(restaurantTableRepository.findById(1L)).thenReturn(Optional.ofNullable(table));

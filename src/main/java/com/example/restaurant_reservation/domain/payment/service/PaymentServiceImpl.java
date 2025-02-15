@@ -33,7 +33,7 @@ public class PaymentServiceImpl implements PaymentService{
                 .reservation(reservation)
                 .amount(requestDto.getAmount())
                 .paymentMethod(requestDto.getPaymentMethod())
-                .status(requestDto.getStatus())
+                .status(PaymentStatus.COMPLETED)
                 .build();
 
         return paymentRepository.save(savedPayment).toResponse();

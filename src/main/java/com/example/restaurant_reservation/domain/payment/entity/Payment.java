@@ -30,6 +30,7 @@ public class Payment extends TimeStamp {
     private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method", nullable = false)
     private PaymentMethod paymentMethod;
 
     @Enumerated(EnumType.STRING)

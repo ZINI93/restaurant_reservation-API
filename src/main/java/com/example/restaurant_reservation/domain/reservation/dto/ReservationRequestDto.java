@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Data
 public class ReservationRequestDto {
 
-    private Long userId;
     private Long restaurantTableId;
     private LocalDateTime reservationTime;
     private int numPeople;
@@ -18,8 +17,7 @@ public class ReservationRequestDto {
 
 
     @Builder
-    public ReservationRequestDto(Long userId, Long restaurantTableId, LocalDateTime reservationTime, int numPeople, ReservationStatus status) {
-        this.userId = userId;
+    public ReservationRequestDto(Long restaurantTableId, LocalDateTime reservationTime, int numPeople, ReservationStatus status) {
         this.restaurantTableId = restaurantTableId;
         this.reservationTime = reservationTime;
         this.numPeople = numPeople;

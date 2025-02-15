@@ -74,7 +74,6 @@ class ReservationServiceImplTest {
         setId(reservation, 1L);
 
         requestDto =new ReservationRequestDto(
-                user.getId(),
                 table.getId(),
                 reservation.getReservationTime(),
                 reservation.getNumPeople(),
@@ -93,7 +92,7 @@ class ReservationServiceImplTest {
         when(reservationRepository.save(any(Reservation.class))).thenReturn(reservation);
         //when
 
-        ReservationResponseDto result = reservationService.createReservation(requestDto);
+        ReservationResponseDto result = reservationService.createReservation(requestDto,user.getId());
 
 
         //then
@@ -134,7 +133,7 @@ class ReservationServiceImplTest {
         when(reservationRepository.reservationSearch(contains(name),contains(phone),eq(startTime),eq(endTime),eq(sortField),eq(status),eq(pageable))).thenReturn(mockReservationPage);
 
         //when
-        Page<ReservationResponseDto> result = reservationService.SearchReservation(name, phone, startTime, endTime, sortField, status, pageable);
+        Page<ReservationResponseDto> result = reservationService.searchReservation(name, phone, startTime, endTime, sortField, status, pageable);
 
         //then
         assertNotNull(result);

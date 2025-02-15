@@ -6,6 +6,7 @@ import com.example.restaurant_reservation.domain.reservation.dto.ReservationUpda
 import com.example.restaurant_reservation.domain.reservation.service.ReservationService;
 import com.example.restaurant_reservation.domain.user.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.boot.archive.spi.JarFileEntryUrlAdjuster;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
@@ -21,13 +22,24 @@ public class ReservationApiController {
     private final ReservationService reservationService;
 
 
+    /**
+     *  予約の登録
+     *
+     */
     @PostMapping
-    public ResponseEntity<ReservationResponseDto> createReservation(@RequestBody ReservationRequestDto requestDto){
+    public ResponseEntity<ReservationResponseDto> createReservation(@RequestBody ReservationRequestDto requestDto,
+                                                                    Authentication authentication){
 
-        ReservationResponseDto reservation = reservationService.createReservation(requestDto);
+        // CONTROLLER から、ユーザのIDを設定する
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = customUserDetails.getUserId();
+
+        ReservationResponseDto reservation = reservationService.createReservation(requestDto,userId);
+
         URI location = URI.create("/api/reservation/" + reservation.getId());
         return ResponseEntity.created(location).body(reservation);
     }
+
 
     @GetMapping("{reservationId}")
     public ResponseEntity<ReservationResponseDto> findById(@PathVariable Long reservationId,

@@ -18,7 +18,7 @@ public class RestaurantTable extends TimeStamp {
     @Column(name = "restaurant_table_id", nullable = false)
     private Long id;
 
-    @Column(name = "table_number", nullable = false)
+    @Column(name = "table_number", nullable = false, unique = true)
     private String tableNumber;
 
     @Column(nullable = false)

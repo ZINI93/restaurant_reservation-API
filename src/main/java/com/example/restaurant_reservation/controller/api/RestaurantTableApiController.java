@@ -18,8 +18,6 @@ public class RestaurantTableApiController {
 
     private final RestaurantTableService tableService;
 
-
-
     @PostMapping
     public ResponseEntity<RestaurantTableResponseDto> createRestaurantTable(@RequestBody RestaurantTableRequestDto requestDto){
 

@@ -8,7 +8,6 @@ import com.example.restaurant_reservation.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +15,7 @@ import java.net.URI;
 
 
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 @RestController
 public class UserApiController {
 
@@ -33,7 +32,7 @@ public class UserApiController {
 
 
     // ユーザーIDで検索
-    @GetMapping("{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<UserResponseDto> findById(@PathVariable Long userId,
                                                     Authentication authentication){
         // 本人以外のIDはアクセス不可
@@ -50,7 +49,7 @@ public class UserApiController {
     }
 
     // ユーザーをアップデート
-    @PutMapping("{userId}")
+    @PutMapping("/user/{userId}")
     public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long userId,
                                                       @RequestBody UserUpdateDto updateDto,
                                                       Authentication authentication) {
