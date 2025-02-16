@@ -15,7 +15,7 @@ CREATE TABLE `users` (
 CREATE TABLE `restaurant_table` (
 
     `restaurant_table_id` BIGINT AUTO_INCREMENT PRIMARY KEY,
-    `table_number` VARCHAR(100) NOT NULL UNIQUE,
+    `table_number` VARCHAR(50) NOT NULL UNIQUE,
     `capacity` INT NOT NULL,
     `is_available` BOOLEAN NOT NULL,
 
@@ -52,11 +52,11 @@ CREATE TABLE `payment` (
     CONSTRAINT `fk_reservation_id`
         FOREIGN KEY (`reservation_id`)
         REFERENCES `reservation`(`reservation_id`)
-        ON DELETE CASCADE
+        ON DELETE RESTRICT
         ON UPDATE CASCADE,
 
     CONSTRAINT `chk_payment_method`
-        CHECK (`payment_method` IN ('CREDIT_CARD', 'lINE_PAY', 'PAY_PAY', 'CASH')),
+        CHECK (`payment_method` IN ('CREDIT_CARD', 'LINE_PAY', 'PAY_PAY', 'CASH')),
 
     CONSTRAINT `chk_status`
         CHECK (`status` IN ('PENDING', 'COMPLETED', 'FAILED', 'REFUNDED'))

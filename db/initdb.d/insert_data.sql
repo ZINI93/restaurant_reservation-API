@@ -99,106 +99,27 @@ insert into users (user_id, username, password, name, email, phone, role) values
 insert into users (user_id, username, password, name, email, phone, role) values (99, 'Emmit', 'tC6''53TRBV', 'Baiss', 'ebaiss2q@exblog.jp', '920-952-5621', 'USER');
 insert into users (user_id, username, password, name, email, phone, role) values (100, 'Thedric', 'pJ1+L#Av2ygoql', 'Pahlsson', 'tpahlsson2r@edublogs.org', '803-424-7620', 'USER');
 
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (1, 4, 15, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (2, 10, 2, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (3, 4, 1, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (4, 3, 11, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (5, 1, 5, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (6, 6, 8, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (7, 4, 11, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (8, 8, 20, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (9, 5, 4, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (10, 5, 9, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (11, 9, 7, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (12, 1, 10, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (13, 1, 1, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (14, 9, 3, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (15, 6, 4, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (16, 1, 17, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (17, 4, 4, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (18, 7, 8, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (19, 6, 19, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (20, 5, 6, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (21, 1, 3, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (22, 7, 10, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (23, 9, 15, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (24, 8, 14, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (25, 10, 5, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (26, 10, 15, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (27, 6, 12, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (28, 8, 14, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (29, 8, 6, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (30, 1, 2, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (31, 6, 8, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (32, 6, 9, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (33, 10, 19, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (34, 4, 19, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (35, 4, 6, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (36, 5, 16, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (37, 8, 11, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (38, 9, 8, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (39, 1, 12, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (40, 10, 10, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (41, 3, 19, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (42, 3, 6, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (43, 9, 19, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (44, 6, 15, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (45, 5, 15, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (46, 8, 11, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (47, 3, 6, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (48, 4, 4, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (49, 8, 19, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (50, 1, 14, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (51, 3, 9, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (52, 8, 8, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (53, 7, 6, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (54, 5, 1, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (55, 9, 5, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (56, 1, 20, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (57, 5, 19, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (58, 2, 17, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (59, 4, 19, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (60, 10, 6, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (61, 1, 19, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (62, 9, 13, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (63, 9, 15, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (64, 1, 12, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (65, 2, 2, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (66, 4, 17, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (67, 5, 13, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (68, 10, 17, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (69, 4, 11, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (70, 6, 18, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (71, 3, 8, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (72, 7, 20, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (73, 8, 12, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (74, 7, 14, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (75, 9, 3, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (76, 1, 13, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (77, 9, 19, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (78, 10, 19, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (79, 1, 8, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (80, 3, 17, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (81, 2, 19, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (82, 8, 11, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (83, 4, 2, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (84, 8, 4, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (85, 8, 8, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (86, 5, 9, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (87, 8, 10, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (88, 4, 8, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (89, 3, 20, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (90, 9, 16, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (91, 5, 10, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (92, 9, 12, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (93, 5, 13, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (94, 6, 11, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (95, 9, 3, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (96, 10, 11, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (97, 5, 13, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (98, 10, 5, false);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (99, 2, 9, true);
-insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (100, 6, 19, false);
+
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (1, 1, 2, false);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (2, 2, 26, false);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (3, 3, 30, false);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (4, 4, 12, true);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (5, 5, 22, true);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (6, 6, 7, true);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (7, 7, 3, true);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (8, 8, 24, false);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (9, 9, 18, false);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (10, 10, 9, false);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (11, 11, 19, true);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (12, 12, 12, false);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (13, 13, 23, true);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (14, 14, 22, true);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (15, 15, 17, true);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (16, 16, 7, true);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (17, 17, 7, true);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (18, 18, 1, false);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (19, 19, 5, false);
+insert into restaurant_table (restaurant_table_id, table_number, capacity, is_available) values (20, 20, 24, false);
 
 
 
@@ -305,12 +226,26 @@ insert into reservation (reservation_id, user_id, restaurant_table_id, reservati
 
 
 
-insert into payment (payment_id, reservation_id, amount, payment_method, status) values (1, 1, 4.65, 'CREDIT_CARD', 'COMPLETED');
-insert into payment (payment_id, reservation_id, amount, payment_method, status) values (2, 2, 8.42, 'CREDIT_CARD', 'PENDING');
-insert into payment (payment_id, reservation_id, amount, payment_method, status) values (3, 3, 5.27, 'PAY_PAY', 'REFUNDED');
-insert into payment (payment_id, reservation_id, amount, payment_method, status) values (4, 4, 2.4, 'PAY_PAY', 'COMPLETED');
-insert into payment (payment_id, reservation_id, amount, payment_method, status) values (5, 5, 12.8, 'lINE_PAY', 'COMPLETED');
-insert into payment (payment_id, reservation_id, amount, payment_method, status) values (6, 6, 8.55, 'CASH', 'COMPLETED');
-insert into payment (payment_id, reservation_id, amount, payment_method, status) values (7, 7, 13.37, 'CREDIT_CARD', 'FAILED');
-insert into payment (payment_id, reservation_id, amount, payment_method, status) values (8, 8, 8.65, 'CREDIT_CARD', 'FAILED');
-insert into payment (payment_id, reservation_id, amount, payment_method, status) values (9, 9, 7.95, 'CASH', 'FAILED');
+
+INSERT INTO payment (reservation_id, amount, payment_method, status)
+VALUES
+(1, 325.33, 'LINE_PAY', 'REFUNDED'),
+(2, 1876.17, 'CASH', 'FAILED'),
+(3, 392.66, 'CASH', 'FAILED'),
+(4, 480.08, 'LINE_PAY', 'COMPLETED'),
+(5, 1116.56, 'PAY_PAY', 'FAILED'),
+(6, 728.74, 'CREDIT_CARD', 'REFUNDED'),
+(7, 528.94, 'CASH', 'REFUNDED'),
+(8, 1847.74, 'LINE_PAY', 'PENDING'),
+(9, 145.35, 'PAY_PAY', 'REFUNDED'),
+(10, 1397.37, 'CREDIT_CARD', 'COMPLETED'),
+(11, 600.12, 'CREDIT_CARD', 'PENDING'),
+(12, 1994.29, 'PAY_PAY', 'PENDING'),
+(13, 1574.42, 'CASH', 'FAILED'),
+(14, 133.91, 'CASH', 'COMPLETED'),
+(15, 456.93, 'CREDIT_CARD', 'PENDING'),
+(16, 1522.29, 'LINE_PAY', 'COMPLETED'),
+(17, 1123.94, 'CREDIT_CARD', 'REFUNDED'),
+(18, 102.59, 'PAY_PAY', 'FAILED'),
+(19, 912.51, 'LINE_PAY', 'PENDING'),
+(20, 1057.97, 'LINE_PAY', 'REFUNDED');
