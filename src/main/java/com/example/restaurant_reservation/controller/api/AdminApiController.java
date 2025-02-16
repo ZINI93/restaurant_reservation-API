@@ -31,9 +31,11 @@ public class AdminApiController {
     private final ReservationService reservationService;
     private final PaymentService paymentService;
 
-    //USER- ADMIN
+    /**
+     *  USER - 管理者機能
+     */
 
-    // ユーザーをサーチ　
+    // USERをサーチ　（USERNAME,NAME,PHONE)　
     @GetMapping("/user/search")  //?page=0&size=10
     public ResponseEntity<Page<UserResponseDto>> searchUser(@RequestParam(required = false) String username,
                                                             @RequestParam(required = false) String name,
@@ -46,14 +48,18 @@ public class AdminApiController {
 
     //ユーザーを削除
     @DeleteMapping("/user/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long userid){
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId){
 
-        userService.deleteUser(userid);
+        userService.deleteUser(userId);
 
         return ResponseEntity.noContent().build();
     }
 
-    //RESERVATION - ADMIN
+    /**
+     * 予約　ー　管理者機能
+     */
+
+    //予約を作る
     @PostMapping("reservation")
     public ResponseEntity<ReservationResponseDto> createReservation(@RequestBody AdminReservationRequestDto requestDto,
                                                                     Authentication authentication){
@@ -71,7 +77,7 @@ public class AdminApiController {
                                                                           @RequestParam(required = false) LocalDateTime startTime,
                                                                           @RequestParam(required = false) LocalDateTime endTime,
                                                                           @RequestParam(required = false) ReservationStatus status,
-                                                                          @RequestParam(required = false) String sortField,
+                                                                          @RequestParam(defaultValue = "reservationTime") String sortField,
                                                                           @PageableDefault(size = 20, page = 0) Pageable pageable){
 
         Page<ReservationResponseDto> reservation = reservationService.searchReservation(name, phone, startTime, endTime, sortField, status, pageable);
@@ -80,7 +86,7 @@ public class AdminApiController {
     }
 
 
-    @DeleteMapping("{reservationId}")
+    @DeleteMapping("/reservation/{reservationId}")
     public ResponseEntity<Void> deleteReservation(@PathVariable Long reservationId){
 
 
