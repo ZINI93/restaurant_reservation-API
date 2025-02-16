@@ -197,6 +197,7 @@
 ```
 #### **4) 予約確認**
 - **HTTPメソッド:** `GET`
+- **照会機能:** `名前`, `電話番号`, `日付、時間`, `ステータス`
 - **URL:** `/reservation/search?name=jinhee&phone=080-1234-5678&startTime=2023-10-01T00:00:00&endTime=2023-10-31T23:59:59&status=COMPLETED&page=0&size=20&sortField=reservationTime`
 
 
