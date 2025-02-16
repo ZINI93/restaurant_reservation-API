@@ -56,7 +56,7 @@ public class ReservationServiceImpl implements ReservationService{
         return reservationRepository.save(savedReservation).toResponse();
     }
 
-    @Override
+    @Override @Transactional
     public ReservationResponseDto AdminCreateReservation(AdminReservationRequestDto reservationRequestDto) {
         //controllerからもらったユーザを使う
         User user = userRepository.findById(reservationRequestDto.getUserId())
