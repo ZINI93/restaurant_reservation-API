@@ -32,34 +32,24 @@ public class UserApiController {
 
 
     // ユーザーIDで検索
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<UserResponseDto> findById(@PathVariable Long userId,
-                                                    Authentication authentication){
+    @GetMapping("/user/me")
+    public ResponseEntity<UserResponseDto> findById(Authentication authentication){
         // 本人以外のIDはアクセス不可
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-
-        if (!customUserDetails.getUserId().equals(userId)){
-            throw  new AccessDeniedException("You cannot modify another user's information.");
-        }
+        Long userId = customUserDetails.getUserId();
 
         UserResponseDto user = userService.findById(userId);
-
 
         return ResponseEntity.ok(user);
     }
 
     // ユーザーをアップデート
-    @PutMapping("/user/{userId}")
-    public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long userId,
-                                                      @RequestBody UserUpdateDto updateDto,
+    @PutMapping("/user/me")
+    public ResponseEntity<UserResponseDto> updateUser(@RequestBody UserUpdateDto updateDto,
                                                       Authentication authentication) {
         // 本人以外のIDはアクセス不可
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-
-        if (!customUserDetails.getUserId().equals(userId)){
-            throw  new AccessDeniedException("You cannot modify another user's information.");
-        }
-
+        Long userId = customUserDetails.getUserId();
 
         UserResponseDto user = userService.updateUser(userId, updateDto);
 

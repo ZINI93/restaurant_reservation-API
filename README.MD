@@ -283,11 +283,11 @@
 ```
 #### **2) 회원 정보 조회**
 - **HTTP 메서드:** `GET`
-- **URL:** `/api/user/{userId}`
+- **URL:** `/api/user/me`
 
 #### **3) 회원 정보 수정**
 - **HTTP 메서드:** `PUT`
-- **URL:** `/api/user/{userId}`
+- **URL:** `/api/user/me`
 
 **요청 본문:**
 ```json
