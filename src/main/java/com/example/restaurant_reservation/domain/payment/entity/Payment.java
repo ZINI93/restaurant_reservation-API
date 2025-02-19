@@ -36,13 +36,16 @@ public class Payment extends TimeStamp {
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;
 
+    @Column(name = "owner_id", nullable = false)
+    private Long ownerId;
 
     @Builder
-    public Payment(Reservation reservation, BigDecimal amount, PaymentMethod paymentMethod, PaymentStatus status) {
+    public Payment(Reservation reservation, BigDecimal amount, PaymentMethod paymentMethod, PaymentStatus status, Long ownerId) {
         this.reservation = reservation;
         this.amount = amount;
         this.paymentMethod = paymentMethod;
         this.status = status;
+        this.ownerId = ownerId;
     }
 
 
@@ -55,7 +58,7 @@ public class Payment extends TimeStamp {
                 .build();
     }
 
-    public void UpdateInfo(BigDecimal amount, PaymentMethod paymentMethod, PaymentStatus status) {
+    public void updateInfo(BigDecimal amount, PaymentMethod paymentMethod, PaymentStatus status) {
         if (amount != null) this.amount = amount;
         if (paymentMethod != null) this.paymentMethod = paymentMethod;
         if (status != null) this.status = status;

@@ -15,14 +15,18 @@ import com.example.restaurant_reservation.domain.user.dto.UserResponseDto;
 import com.example.restaurant_reservation.domain.user.entity.User;
 import com.example.restaurant_reservation.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.desktop.PrintFilesEvent;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
@@ -34,10 +38,13 @@ public class ReservationServiceImpl implements ReservationService{
     private final RestaurantTableRepository restaurantTableRepository;
 
 
-    // 予約を作成する
+    /**
+     * 予約を作成する
+     */
     @Override @Transactional
     public ReservationResponseDto createReservation(ReservationRequestDto reservationRequestDto,Long userId) {
 
+        log.info("Creating reservation for user ID: {}", userId);
         //controllerからもらったユーザを使う
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("ユーザーIDが見つかりません。"));
@@ -52,6 +59,8 @@ public class ReservationServiceImpl implements ReservationService{
                 .numPeople(reservationRequestDto.getNumPeople())
                 .status(ReservationStatus.COMPLETED)
                 .build();
+
+        log.info("Created reservation:{}", savedReservation);
 
         return reservationRepository.save(savedReservation).toResponse();
     }
@@ -73,15 +82,21 @@ public class ReservationServiceImpl implements ReservationService{
                 .status(ReservationStatus.COMPLETED)
                 .build();
 
+        log.info("Created Reservation:{}",savedReservation);
+
         return reservationRepository.save(savedReservation).toResponse();
     }
 
 
     // 予約IDで予約を検索
     @Override
-    public ReservationResponseDto findById(Long reservationId) {
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(() -> new IllegalArgumentException("予約 ID が見つかりません。"));
+    public ReservationResponseDto findById(Long userId) {
+        Reservation reservation = reservationRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("ユーザーIDに該当する予約が見つかりません。"));
+
+        if ( reservation.getUser().getId() == null || !Objects.equals(reservation.getUser().getId(), userId)){
+            throw new AccessDeniedException("指定されたIDに対するアクセス権がありません。");
+        }
         return reservation.toResponse();
     }
 
@@ -105,11 +120,19 @@ public class ReservationServiceImpl implements ReservationService{
 
     // 予約をアップデート
     @Override @Transactional
-    public ReservationResponseDto updateReservation(Long reservationId, ReservationUpdateDto updateDto) {
+    public ReservationResponseDto updateReservation(Long userId, ReservationUpdateDto updateDto) {
 
-        Reservation reservation = reservationRepository.findById(reservationId)
+
+        //予約の情報からユーザーのIDを持ってくる
+        Reservation reservation = reservationRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("予約 ID が見つかりません。"));
 
+        //ユーザーが存在しているかCHECK
+        if (reservation.getUser() == null || !Objects.equals(reservation.getUser().getId(),userId)){
+            throw new AccessDeniedException("指定されたIDに対するアクセス権がありません。");
+        }
+
+        //予約のテーブルをidをCHECK
         RestaurantTable restaurantTable = restaurantTableRepository.findById(updateDto.getRestaurantTableId())
                 .orElseThrow(() -> new IllegalArgumentException("レストランテーブル ID が見つかりません。"));
 

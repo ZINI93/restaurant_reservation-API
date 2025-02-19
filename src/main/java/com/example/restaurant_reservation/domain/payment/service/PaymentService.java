@@ -7,11 +7,14 @@ import com.example.restaurant_reservation.domain.payment.entity.PaymentStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface PaymentService {
 
-    PaymentResponseDto createPayment(PaymentRequestDto requestDto);
-    PaymentResponseDto findById(Long paymentId);
+    PaymentResponseDto createPayment(Long userId, PaymentRequestDto requestDto);
+    PaymentResponseDto findById(Long userId);
+    List<PaymentResponseDto> findByOwnerId(Long userId);
     Page<PaymentResponseDto> paymentSearch(Long reservationId, PaymentStatus status , Pageable pageable);
     PaymentResponseDto updatePayment(Long paymentId, PaymentUpdateDto updateDto);
-    void deletePayment(Long paymentId);
+    void deletePayment(Long userId);
 }

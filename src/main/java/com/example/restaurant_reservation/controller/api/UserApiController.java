@@ -32,7 +32,7 @@ public class UserApiController {
 
 
     // ユーザーIDで検索
-    @GetMapping("/user/me")
+    @GetMapping("/users/me")
     public ResponseEntity<UserResponseDto> findById(Authentication authentication){
         // 本人以外のIDはアクセス不可
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
@@ -44,7 +44,7 @@ public class UserApiController {
     }
 
     // ユーザーをアップデート
-    @PutMapping("/user/me")
+    @PutMapping("/users/update")
     public ResponseEntity<UserResponseDto> updateUser(@RequestBody UserUpdateDto updateDto,
                                                       Authentication authentication) {
         // 本人以外のIDはアクセス不可

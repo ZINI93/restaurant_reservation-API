@@ -40,42 +40,31 @@ public class ReservationApiController {
     }
 
 
-    @GetMapping("{reservationId}")
-    public ResponseEntity<ReservationResponseDto> findById(@PathVariable Long reservationId,
-                                                           Authentication authentication){
+    @GetMapping("/me")
+    public ResponseEntity<ReservationResponseDto> findById(Authentication authentication){
 
         // 現在ログインしているユーザー情報を取得する
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         Long userId = customUserDetails.getUserId();
 
-        ReservationResponseDto reservation = reservationService.findById(reservationId);
-
-        //本人の要約確認
-        if (!reservation.getUserId().equals(userId)){
-            throw new AccessDeniedException("You cannot access another user's reservation.");
-        }
+        ReservationResponseDto reservation = reservationService.findById(userId);
 
         return ResponseEntity.ok(reservation);
     }
 
-    @PutMapping("{reservationId}")
-    public ResponseEntity<ReservationResponseDto> updateReservation(@PathVariable Long reservationId,
-                                                                    @RequestBody ReservationUpdateDto updateDto,
+    /**
+     *  予約をアップデート
+     */
+    @PutMapping("/update")
+    public ResponseEntity<ReservationResponseDto> updateReservation(@RequestBody ReservationUpdateDto updateDto,
                                                                     Authentication authentication){
         // 現在ログインしているユーザー情報を取得する
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         Long userId = customUserDetails.getUserId();
 
-        ReservationResponseDto reservation = reservationService.updateReservation(reservationId, updateDto);
-
-        //本人の要約確認
-        if (!reservation.getUserId().equals(userId)){
-            throw new AccessDeniedException("You cannot access another user's reservation.");
-        }
+        ReservationResponseDto reservation = reservationService.updateReservation(userId, updateDto);
 
         return ResponseEntity.ok(reservation);
     }
-
-
 
 }

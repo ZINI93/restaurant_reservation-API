@@ -35,6 +35,7 @@ public class User extends TimeStamp {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+
     @Builder
     public User(String username, String password, String name, String email, String phone, UserRole role) {
         this.username = username;

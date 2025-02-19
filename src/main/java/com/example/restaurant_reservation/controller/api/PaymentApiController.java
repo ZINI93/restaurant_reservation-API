@@ -2,20 +2,16 @@ package com.example.restaurant_reservation.controller.api;
 
 import com.example.restaurant_reservation.domain.payment.dto.PaymentRequestDto;
 import com.example.restaurant_reservation.domain.payment.dto.PaymentResponseDto;
-import com.example.restaurant_reservation.domain.payment.dto.PaymentUpdateDto;
 import com.example.restaurant_reservation.domain.payment.service.PaymentService;
-import com.example.restaurant_reservation.domain.reservation.dto.ReservationResponseDto;
 import com.example.restaurant_reservation.domain.reservation.service.ReservationService;
-import com.example.restaurant_reservation.domain.user.dto.UserResponseDto;
 import com.example.restaurant_reservation.domain.user.service.CustomUserDetails;
-import com.example.restaurant_reservation.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/payment")
@@ -25,66 +21,53 @@ public class PaymentApiController {
     private final PaymentService paymentService;
     private final ReservationService reservationService;
 
-    @PostMapping
-    public ResponseEntity<PaymentResponseDto>createPayment(@RequestBody PaymentRequestDto requestDto){
-        PaymentResponseDto payment = paymentService.createPayment(requestDto);
-        URI location = URI.create("/api/payment/" + payment.getId());
-        return ResponseEntity.created(location).body(payment);
-    }
-
-    @GetMapping("{paymentId}")
-    public ResponseEntity<PaymentResponseDto>findByPaymentId(@PathVariable Long paymentId,
-                                                             Authentication authentication){
+    /**
+     * お支払いを作成
+     */
+     @PostMapping
+    public ResponseEntity<PaymentResponseDto>createPayment(@RequestBody PaymentRequestDto requestDto,
+                                                           Authentication authentication){
 
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         Long userId = customUserDetails.getUserId();
 
-        //支払いの情報を照会
-        PaymentResponseDto payment = paymentService.findById(paymentId);
+        PaymentResponseDto payment = paymentService.createPayment(userId,requestDto);
 
-        //予約情報からuserIdを抽出して確認する
-        ReservationResponseDto reservation = reservationService.findByPaymentId(paymentId);
+        URI location = URI.create("/api/payment/" + payment.getId());
+        return ResponseEntity.created(location).body(payment);
+    }
 
-        //予約情報が存在しない場合の処理
-        if (reservation == null){
-            throw new IllegalArgumentException("この支払いには対応する予約がありません。");
-        }
+    /**
+     * お支払いの情報を照会
+     */
+    @GetMapping("/me")
+    public ResponseEntity<List<PaymentResponseDto>>findByPaymentId(Authentication authentication){
 
-        Long reservationUserId = reservation.getUserId();
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = customUserDetails.getUserId();
 
-        //支払いのユーザが合ってるか照会
-        if (!reservationUserId.equals(userId)){
-            throw new AccessDeniedException("You cannot access another user's payment information.");
-        }
+        List<PaymentResponseDto> payment = paymentService.findByOwnerId(userId);
+
 
         return ResponseEntity.ok(payment);
     }
 
 
     // お支払いをキャンセル
-    @DeleteMapping("{paymentId}")
-    public ResponseEntity<Void>deletePayment(@PathVariable Long paymentId,
-                                             Authentication authentication){
+    @DeleteMapping
+    public ResponseEntity<Void>deletePayment(Authentication authentication){
 
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         Long userId = customUserDetails.getUserId();
 
-        paymentService.deletePayment(paymentId);
+        //ユーザーとして、お支払いの情報を照会
+        PaymentResponseDto payment = paymentService.findById(userId);
 
-        //予約情報からuserIdを抽出して確認する
-        ReservationResponseDto reservation = reservationService.findByPaymentId(paymentId);
-
-        //予約情報が存在しない場合の処理
-        if (reservation == null){
-            throw new IllegalArgumentException("この支払いには対応する予約がありません。");
+        if (!"CANCELED".equals(payment.getStatus())){
+            throw new IllegalStateException("キャンセルされたお支払いのみ削除できます。");
         }
 
-        Long reservationUserId = reservation.getUserId();
-
-        //支払いのユーザが合ってるか照会
-        if (!reservationUserId.equals(userId)){
-            throw new AccessDeniedException("You cannot access another user's payment information.");
-        }
+        paymentService.deletePayment(userId);
 
         return ResponseEntity.noContent().build();
     }

@@ -41,7 +41,6 @@ public class Reservation extends TimeStamp {
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
-
     @Builder
     public Reservation(User user, RestaurantTable restaurantTable, LocalDateTime reservationTime, int numPeople, ReservationStatus status) {
         this.user = user;
