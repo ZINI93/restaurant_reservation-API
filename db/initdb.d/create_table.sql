@@ -45,6 +45,7 @@ CREATE TABLE `payment` (
     `amount` DECIMAL(10, 2) NOT NULL,
     `payment_method` VARCHAR(50) NOT NULL,
     `status` VARCHAR(50) NOT NULL,
+    `owner_id` BIGINT NOT NULL,
 
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -59,6 +60,6 @@ CREATE TABLE `payment` (
         CHECK (`payment_method` IN ('CREDIT_CARD', 'LINE_PAY', 'PAY_PAY', 'CASH')),
 
     CONSTRAINT `chk_status`
-        CHECK (`status` IN ('PENDING', 'COMPLETED', 'FAILED', 'REFUNDED'))
+        CHECK (`status` IN ('PENDING', 'COMPLETED', 'FAILED', 'REFUNDED', 'CANCELED'))
 );
 
