@@ -59,11 +59,11 @@
 ```
 #### **2) 会員情報の取得**
 - **HTTPメソッド:** `GET`
-- **URL:** `/api/user/{userId}`
+- **URL:** `/api/users/me`
 
 #### **3) 会員情報の更新**
 - **HTTPメソッド:** `PUT`
-- **URL:** `/api/user/{userId}`
+- **URL:** `/api/users/update`
 
 **リクエスト本文:**
 ```json
@@ -71,8 +71,7 @@
   "password": "12341234",
   "name": "jinhee",
   "email": "aa@gmail.com",
-  "phone": "080-1111-1111",
-  "role": "USER"
+  "phone": "080-1111-1111"
 }
 ```
 
@@ -94,11 +93,11 @@
 
 #### **2) 予約の確認**
 - **HTTPメソッド:** `GET`
-- **URL:** `/api/reservation/{reservationID}`
+- **URL:** `/api/reservation/me`
 
 #### **3) 予約の修正**
 - **HTTPメソッド:** `PUT`
-- **URL:** `/api/reservation/{reservationID}`
+- **URL:** `/api/reservation/update`
 
 **リクエスト本文:**
 ```json
@@ -156,18 +155,17 @@
 {
   "reservationId": "1",
   "amount": "1000.00",
-  "paymentMethod": "CASH",
-  "status": "PENDING"
+  "paymentMethod": "CASH"
 }
 ```
 #### **2) 決済情報の取得**
 - **HTTPメソッド:** `GET`
-- **URL:** `/api/payment/{paymentId}`
+- **URL:** `/api/payment/me`
 
 
-#### **3) 決済キャンセル**
+#### **3) 決済削除**
 - **HTTPメソッド:** `DELETE`
-- **URL:** `/api/payment/{paymentId}`
+- **URL:** `/api/payment`
 
 ---
 
@@ -283,11 +281,11 @@
 ```
 #### **2) 회원 정보 조회**
 - **HTTP 메서드:** `GET`
-- **URL:** `/api/user/me`
+- **URL:** `/api/users/me`
 
 #### **3) 회원 정보 수정**
 - **HTTP 메서드:** `PUT`
-- **URL:** `/api/user/me`
+- **URL:** `/api/users/update`
 
 **요청 본문:**
 ```json
@@ -296,7 +294,6 @@
   "name": "jinhee",
   "email": "aa@gmail.com",
   "phone": "080-1111-1111",
-  "role": "USER"
 }
 ```
 
@@ -317,11 +314,11 @@
 
 #### **2) 예약 조회**
 - **HTTP 메서드:** `GET`
-- **URL:** `/api/reservation/{reservationID}`
+- **URL:** `/api/reservation/me`
 
 #### **3) 예약 수정**
 - **HTTP 메서드:** `PUT`
-- **URL:** `/api/reservation/{reservationID}`
+- **URL:** `/api/reservation/update`
 
 **요청 본문:**
 ```json
@@ -385,12 +382,12 @@
 ```
 #### **2) 결제 조회**
 - **HTTP 메서드:** `GET`
-- **URL:** `/api/payment/{paymentId}`
+- **URL:** `/api/payment/me`
 
 
 #### **4) 결제 취소 **
 - **HTTP 메서드:** `DELETE`
-- **URL:** `/api/payment/{paymentId}`
+- **URL:** `/api/payment/update`
 
 ---
 
