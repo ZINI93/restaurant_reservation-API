@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.UUID;
+
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -35,15 +37,19 @@ public class User extends TimeStamp {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @Column(name = "user_uuid",nullable = false, updatable = false, unique = true)
+    private String userUuid;
+
 
     @Builder
-    public User(String username, String password, String name, String email, String phone, UserRole role) {
+    public User(String username, String password, String name, String email, String phone, UserRole role, String userUuid) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.role = role;
+        this.userUuid = UUID.randomUUID().toString();
     }
 
     public UserResponseDto toResponse(){

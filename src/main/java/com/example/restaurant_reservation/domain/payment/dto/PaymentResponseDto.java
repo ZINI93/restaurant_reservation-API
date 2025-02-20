@@ -18,6 +18,7 @@ public class PaymentResponseDto {
     private BigDecimal amount;
     private PaymentMethod paymentMethod;
     private PaymentStatus status;
+    private String ownerId;
 
 
     @Builder

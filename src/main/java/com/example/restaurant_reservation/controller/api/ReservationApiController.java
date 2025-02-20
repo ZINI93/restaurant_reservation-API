@@ -6,8 +6,10 @@ import com.example.restaurant_reservation.domain.reservation.dto.ReservationUpda
 import com.example.restaurant_reservation.domain.reservation.service.ReservationService;
 import com.example.restaurant_reservation.domain.user.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,16 +43,18 @@ public class ReservationApiController {
 
 
     @GetMapping("/me")
-    public ResponseEntity<ReservationResponseDto> findById(Authentication authentication){
+    public ResponseEntity<Page<ReservationResponseDto>> findById(Authentication authentication,
+                                                                @PageableDefault(size = 10 , page = 0) Pageable pageable){
 
         // 現在ログインしているユーザー情報を取得する
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         Long userId = customUserDetails.getUserId();
 
-        ReservationResponseDto reservation = reservationService.findById(userId);
+        Page<ReservationResponseDto> reservations = reservationService.findAllByUserId(userId, pageable);
 
-        return ResponseEntity.ok(reservation);
+        return ResponseEntity.ok(reservations);
     }
+
 
     /**
      *  予約をアップデート

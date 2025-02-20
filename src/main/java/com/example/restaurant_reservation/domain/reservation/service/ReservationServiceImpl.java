@@ -11,7 +11,6 @@ import com.example.restaurant_reservation.domain.reservation.entity.ReservationS
 import com.example.restaurant_reservation.domain.reservation.repository.ReservationRepository;
 import com.example.restaurant_reservation.domain.restaurantTable.entity.RestaurantTable;
 import com.example.restaurant_reservation.domain.restaurantTable.repository.RestaurantTableRepository;
-import com.example.restaurant_reservation.domain.user.dto.UserResponseDto;
 import com.example.restaurant_reservation.domain.user.entity.User;
 import com.example.restaurant_reservation.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.awt.desktop.PrintFilesEvent;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static com.example.restaurant_reservation.domain.reservation.entity.QReservation.reservation;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -112,6 +114,29 @@ public class ReservationServiceImpl implements ReservationService{
         return payment.getReservation().toResponse();
     }
 
+    @Override
+    public ReservationResponseDto findByUuid(String uuid) {
+        Reservation reservation = reservationRepository.findByReservationUuid(uuid)
+                .orElseThrow(() -> new IllegalArgumentException("ユーザーIDに該当するお支払いが見つかりません。"));
+
+        return reservation.toResponse();
+    }
+
+    @Override
+    public Page<ReservationResponseDto> findAllByUserId(Long userId, Pageable pageable) {
+
+        log.info("Searching reservation for user Id :{}",userId);
+
+        Page<Reservation> reservations = reservationRepository.findAllByUserId(userId, pageable);
+
+        if (reservations.isEmpty()){
+            throw new IllegalArgumentException("予約 ID が見つかりません。");
+        }
+
+        return reservations.map(Reservation::toResponse);
+
+    }
+
     // 予約(名前、電話番号、予約時間、予約のステータスで予約）検索
     @Override
     public Page<ReservationResponseDto> searchReservation(String name, String phone, LocalDateTime startTime, LocalDateTime endTime, String sortField, ReservationStatus status, Pageable pageable) {
@@ -147,9 +172,10 @@ public class ReservationServiceImpl implements ReservationService{
 
     // 予約を削除
     @Override @Transactional
-    public void deleteReservation(Long reservationId) {
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(() -> new IllegalArgumentException("予約 ID が見つかりません。"));
+    public void deleteReservation(String uuid) {
+        Reservation reservation = reservationRepository.findByReservationUuid(uuid)
+                .orElseThrow(() -> new IllegalArgumentException("ユーザーIDに該当するお支払いが見つかりません。"));
+
 
         reservationRepository.delete(reservation);
     }

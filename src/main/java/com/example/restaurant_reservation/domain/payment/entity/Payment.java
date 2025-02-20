@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -24,7 +25,7 @@ public class Payment extends TimeStamp {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id",nullable = false)
+    @JoinColumn(name = "reservation_id",nullable = false, unique = true)
     private Reservation reservation;
 
     private BigDecimal amount;
@@ -39,13 +40,17 @@ public class Payment extends TimeStamp {
     @Column(name = "owner_id", nullable = false)
     private Long ownerId;
 
+    @Column(name = "payment_uuid",nullable = false, unique = true, updatable = false)
+    private String paymentUuid;
+
     @Builder
-    public Payment(Reservation reservation, BigDecimal amount, PaymentMethod paymentMethod, PaymentStatus status, Long ownerId) {
+    public Payment(Reservation reservation, BigDecimal amount, PaymentMethod paymentMethod, PaymentStatus status, Long ownerId, String uuid) {
         this.reservation = reservation;
         this.amount = amount;
         this.paymentMethod = paymentMethod;
         this.status = status;
         this.ownerId = ownerId;
+        this.paymentUuid = UUID.randomUUID().toString();
     }
 
 

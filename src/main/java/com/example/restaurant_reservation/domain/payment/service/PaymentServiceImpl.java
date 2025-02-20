@@ -78,6 +78,14 @@ public class PaymentServiceImpl implements PaymentService{
         return payment.toResponse();
     }
 
+    @Override
+    public PaymentResponseDto findByUuid(String uuid) {
+        Payment payment = paymentRepository.findByPaymentUuid(uuid)
+                .orElseThrow(() -> new IllegalArgumentException("ユーザーUUIDに該当するお支払いが見つかりません。"));
+
+        return payment.toResponse();
+    }
+
     /**
      * ユーザーの支払いの情報を照会
      */
@@ -135,18 +143,16 @@ public class PaymentServiceImpl implements PaymentService{
      *  お支払い削除
      */
     @Override @Transactional
-    public void deletePayment(Long userId) {
+    public void deletePayment(String uuid) {
 
-        log.info("deleting payment for user Id:{}",userId);
+        log.info("deleting payment for user Id:{}",uuid);
 
-        Payment payment = paymentRepository.findByOwnerId(userId)
+        Payment payment = paymentRepository.findByPaymentUuid(uuid)
                 .orElseThrow(() -> new IllegalArgumentException("ユーザーIDに該当するお支払いが見つかりません。"));
 
-        // ユーザーIDが一致するか確認
-        if (payment.getOwnerId() == null || !Objects.equals(payment.getOwnerId(), userId)){
-            throw new AccessDeniedException("指定されたIDに対するアクセス権がありません。");
-        }
+        
+
         paymentRepository.delete(payment);
-        log.info("Successfully deleted payment for user ID: {}", userId);
+        log.info("Successfully deleted payment for user ID: {}", uuid);
     }
 }

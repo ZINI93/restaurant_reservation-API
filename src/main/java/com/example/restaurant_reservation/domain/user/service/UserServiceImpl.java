@@ -52,6 +52,14 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public UserResponseDto findByUserUuId(String uuid) {
+        User user = userRepository.findByUserUuid(uuid)
+                .orElseThrow(() -> new IllegalArgumentException("ユーザーIDに該当するユーザーが見つかりません。"));
+
+        return user.toResponse();
+    }
+
     //　ユーザー（ID, お名前、電話番号)で検索
     @Override
     public Page<UserResponseDto> SearchUser(String username, String name, String phone, Pageable pageable) {
@@ -81,9 +89,9 @@ public class UserServiceImpl implements UserService {
 
     //　ユーザーを削除
     @Override @Transactional
-    public void deleteUser(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("ユーザーのＩＤが見つかりません。"));
+    public void deleteUser(String uuid) {
+        User user = userRepository.findByUserUuid(uuid)
+                .orElseThrow(() -> new IllegalArgumentException("ユーザーIDに該当するユーザーが見つかりません。"));
 
         userRepository.delete(user);
     }

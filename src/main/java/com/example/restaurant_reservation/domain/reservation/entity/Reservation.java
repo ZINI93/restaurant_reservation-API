@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 @Getter
@@ -41,13 +42,17 @@ public class Reservation extends TimeStamp {
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
+    @Column(nullable = false, unique = true, updatable = false, name = "reservation_uuid")
+    private String reservationUuid;
+
     @Builder
-    public Reservation(User user, RestaurantTable restaurantTable, LocalDateTime reservationTime, int numPeople, ReservationStatus status) {
+    public Reservation(User user, RestaurantTable restaurantTable, LocalDateTime reservationTime, int numPeople, ReservationStatus status,String reservationUuid) {
         this.user = user;
         this.restaurantTable = restaurantTable;
         this.reservationTime = reservationTime;
         this.numPeople = numPeople;
         this.status = status;
+        this.reservationUuid = UUID.randomUUID().toString();
     }
 
     public ReservationResponseDto toResponse(){

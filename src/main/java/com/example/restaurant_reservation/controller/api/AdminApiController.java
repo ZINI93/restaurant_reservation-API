@@ -16,11 +16,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/admin")
@@ -47,10 +50,10 @@ public class AdminApiController {
     }
 
     //ユーザーを削除
-    @DeleteMapping("/user/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long userId){
+    @DeleteMapping("/users/{UserUuid}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String UserUuid){
 
-        userService.deleteUser(userId);
+        userService.deleteUser(UserUuid);
 
         return ResponseEntity.noContent().build();
     }
@@ -71,6 +74,10 @@ public class AdminApiController {
     }
 
 
+    /**
+     *  予約のサーチ
+     *  search : 名前、電話番号、予約時間、ステータス
+     */
     @GetMapping("/reservation/search")
     public ResponseEntity<Page<ReservationResponseDto>> searchReservation(@RequestParam(required = false) String name,
                                                                           @RequestParam(required = false) String phone,
@@ -86,11 +93,23 @@ public class AdminApiController {
     }
 
 
-    @DeleteMapping("/reservation/{reservationId}")
-    public ResponseEntity<Void> deleteReservation(@PathVariable Long reservationId){
+    /**
+     * 予約を削除
+     */
+    @DeleteMapping("/reservation/{reservationUuid}")
+    public ResponseEntity<Void> deleteReservation(@PathVariable String reservationUuid,
+                                                  Authentication authentication){
 
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = customUserDetails.getUserId();
 
-        reservationService.deleteReservation(reservationId);
+        ReservationResponseDto reservation = reservationService.findByUuid(reservationUuid);
+
+        if (Objects.equals(reservation.getUserId(),userId)){
+            throw new AccessDeniedException("この予約の削除権限がありません。");
+        }
+
+        reservationService.deleteReservation(reservationUuid);
 
         return ResponseEntity.noContent().build();
     }

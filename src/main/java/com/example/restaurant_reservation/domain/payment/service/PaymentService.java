@@ -13,8 +13,9 @@ public interface PaymentService {
 
     PaymentResponseDto createPayment(Long userId, PaymentRequestDto requestDto);
     PaymentResponseDto findById(Long userId);
+    PaymentResponseDto findByUuid(String uuid);
     List<PaymentResponseDto> findByOwnerId(Long userId);
     Page<PaymentResponseDto> paymentSearch(Long reservationId, PaymentStatus status , Pageable pageable);
     PaymentResponseDto updatePayment(Long paymentId, PaymentUpdateDto updateDto);
-    void deletePayment(Long userId);
+    void deletePayment(String uuid);
 }

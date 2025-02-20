@@ -12,10 +12,11 @@ public interface UserService {
 
     UserResponseDto findById(Long userId);
 
+    UserResponseDto findByUserUuId(String uuid);
     Page<UserResponseDto> SearchUser(String username, String name , String phone, Pageable pageable);
 
     UserResponseDto updateUser(Long userId, UserUpdateDto updateDto);
 
-    void deleteUser(Long userId);
+    void deleteUser(String uuid);
 
 }
