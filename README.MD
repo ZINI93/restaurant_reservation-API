@@ -165,7 +165,7 @@
 
 #### **3) 決済削除**
 - **HTTPメソッド:** `DELETE`
-- **URL:** `/api/payment`
+- **URL:** `/api/payment/{paymentUuid}`
 
 ---
 
@@ -178,7 +178,7 @@
 
 #### **2) ユーザー削除**
 - **HTTPメソッド:** `DELETE`
-- **URL:** `/api/admin/user/{userId}`
+- **URL:** `/api/admin/user/{userUuId}`
 
 #### **3) 管理者による手動予約**
 - **HTTPメソッド:** `POST`
