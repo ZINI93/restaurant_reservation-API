@@ -3,10 +3,7 @@ package com.example.restaurant_reservation.domain.restaurantTable.entity;
 import com.example.restaurant_reservation.domain.TimeStamp;
 import com.example.restaurant_reservation.domain.restaurantTable.dto.RestaurantTableResponseDto;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -48,8 +45,12 @@ public class RestaurantTable extends TimeStamp {
         this.isAvailable = isAvailable;
     }
 
-
-
+    public void reserve(){
+        if (!this.isAvailable){
+            throw new IllegalStateException("こーのテーブルはすでに予約されています。");
+        }
+        this.isAvailable = false;
+    }
 
 
 }

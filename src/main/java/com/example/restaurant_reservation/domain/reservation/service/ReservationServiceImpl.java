@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.desktop.PrintFilesEvent;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -54,13 +55,30 @@ public class ReservationServiceImpl implements ReservationService{
         RestaurantTable restaurantTable = restaurantTableRepository.findById(reservationRequestDto.getRestaurantTableId())
                 .orElseThrow(() -> new IllegalArgumentException("restaurantTableIdが見つかりません。"));
 
+        // 予約時間が現在の時刻より後かチェック
+        LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+        if (reservationRequestDto.getReservationTime().isBefore(now)){
+            throw new IllegalArgumentException("予約時間は現在の時刻より後に設定してください。");
+        }
+        // 予約時間を1時間単位に制限
+        LocalDateTime requestedTime = reservationRequestDto.getReservationTime().truncatedTo(ChronoUnit.HOURS);
+        if (!reservationRequestDto.getReservationTime().equals(requestedTime)){
+            throw new IllegalArgumentException("予約時間は1時間単位で設定してください。");
+        }
+        // 同じ時間帯に予約があるかチェック
+        boolean isAlreadyReserved = reservationRepository.existsByRestaurantTableIdAndReservationTime(restaurantTable.getId(), requestedTime);
+        if (isAlreadyReserved){
+            throw new IllegalStateException("この時間帯にはすでに予約が入っています。");
+        }
+
         Reservation savedReservation = Reservation.builder()
                 .user(user)
                 .restaurantTable(restaurantTable)
-                .reservationTime(reservationRequestDto.getReservationTime())
+                .reservationTime(requestedTime)
                 .numPeople(reservationRequestDto.getNumPeople())
                 .status(ReservationStatus.COMPLETED)
                 .build();
+
 
         log.info("Created reservation:{}", savedReservation);
 
