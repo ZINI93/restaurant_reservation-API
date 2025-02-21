@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,7 +51,9 @@ class UserServiceImplTest {
                 "Jinhee",
                 "qw@gmail.com",
                 "080-1234-1234",
-                UserRole.USER);
+                UserRole.USER,
+                UUID.randomUUID().toString()
+        );
 
 
         userRequestDto = new UserRequestDto(
@@ -146,11 +149,13 @@ class UserServiceImplTest {
 
     @Test
     void deleteUser() {
+
+        String uuid = UUID.randomUUID().toString();
         //given
-        when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user));
+        when(userRepository.findByUserUuid(uuid)).thenReturn(Optional.ofNullable(user));
 
         //when
-        userService.deleteUser(1L);
+        userService.deleteUser(uuid);
 
         //then
         verify(userRepository,times(1)).delete(user);

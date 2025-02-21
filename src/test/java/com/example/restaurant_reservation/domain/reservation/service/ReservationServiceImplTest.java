@@ -13,6 +13,7 @@ import com.example.restaurant_reservation.domain.user.repository.UserRepository;
 import com.example.restaurant_reservation.domain.user.repository.UserRepositoryImpl;
 import org.hibernate.sql.ast.tree.expression.CaseSimpleExpression;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,7 +24,9 @@ import org.springframework.data.domain.PageRequest;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -40,6 +43,9 @@ class ReservationServiceImplTest {
     ReservationRequestDto requestDto;
     Reservation reservation;
 
+    User user;
+
+    RestaurantTable table;
     private void setUserId(User user, Long id)throws Exception{
         Field field = user.getClass().getDeclaredField("id");
         field.setAccessible(true);
@@ -56,20 +62,23 @@ class ReservationServiceImplTest {
     @BeforeEach
     void setup() throws Exception {
 
-        User user = User.builder().build();
+        user = User.builder().build();
         setId(user,1L);
 
 
-        RestaurantTable table = RestaurantTable.builder().build();
+        table = RestaurantTable.builder().capacity(10).build();
         setId(table,1L);
 
+
+        LocalDateTime requestTime = LocalDateTime.now().plusDays(5).truncatedTo(ChronoUnit.HOURS);
 
         reservation = new Reservation(
                 user,
                 table,
-                LocalDateTime.now().minusDays(2),
+                requestTime,
                 5,
-                ReservationStatus.COMPLETED
+                ReservationStatus.COMPLETED,
+                UUID.randomUUID().toString()
         );
         setId(reservation, 1L);
 
@@ -81,14 +90,15 @@ class ReservationServiceImplTest {
         );
     }
 
+    @DisplayName("予約作成")
     @Test
     void createReservation() {
         //given
-        User user = User.builder().build();
-        RestaurantTable restaurantTable = RestaurantTable.builder().build();
+
+
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        when(restaurantTableRepository.findById(1L)).thenReturn(Optional.of(restaurantTable));
+        when(restaurantTableRepository.findById(1L)).thenReturn(Optional.of(table));
         when(reservationRepository.save(any(Reservation.class))).thenReturn(reservation);
         //when
 
@@ -103,19 +113,25 @@ class ReservationServiceImplTest {
         verify(reservationRepository, times(1)).save(any(Reservation.class));
     }
 
+    @DisplayName("ユーザーとして、予約を照会")
     @Test
-    void findById() {
+    void findByUserId() {
         //given
-        when(reservationRepository.findById(1L)).thenReturn(Optional.ofNullable(reservation));
+
+        when(reservationRepository.findByUserId(1L)).thenReturn(Optional.ofNullable(reservation));
+
         //when
-        ReservationResponseDto result = reservationService.findById(1L);
+        ReservationResponseDto result = reservationService.findById(user.getId());
 
         //then
         assertNotNull(result);
         assertEquals(5,result.getNumPeople());
-        verify(reservationRepository, times(1)).findById(1L);
+        assertEquals(user.getId(),result.getUserId());
+        verify(reservationRepository, times(1)).findByUserId(1L);
     }
 
+
+    @DisplayName("予約を名前、電話番号、時間でサーチ")
     @Test
     void searchReservation() {
         //given
@@ -143,6 +159,7 @@ class ReservationServiceImplTest {
 
     }
 
+    @DisplayName("予約をアップデート")
     @Test
     void updateReservation() throws Exception {
         //given
@@ -158,7 +175,7 @@ class ReservationServiceImplTest {
 
 
         when(restaurantTableRepository.findById(2L)).thenReturn(Optional.ofNullable(restaurantTable));
-        when(reservationRepository.findById(1L)).thenReturn(Optional.ofNullable(reservation));
+        when(reservationRepository.findByUserId(1L)).thenReturn(Optional.ofNullable(reservation));
 
         //when
         ReservationResponseDto result = reservationService.updateReservation(1L, updateReservation);
@@ -168,16 +185,19 @@ class ReservationServiceImplTest {
         assertEquals(updateReservation.getRestaurantTableId(),result.getRestaurantTableId());
         assertEquals(3,result.getNumPeople());
 
-        verify(reservationRepository,times(1)).findById(1L);
+        verify(reservationRepository,times(1)).findByUserId(1L);
 
     }
 
+    @DisplayName("予約を削除")
     @Test
     void deleteReservation() {
         //given
-        when(reservationRepository.findById(1L)).thenReturn(Optional.ofNullable(reservation));
+        String uuid = UUID.randomUUID().toString();
+
+        when(reservationRepository.findByReservationUuid(uuid)).thenReturn(Optional.ofNullable(reservation));
         //when
-        reservationService.deleteReservation(1L);
+        reservationService.deleteReservation(uuid);
 
         //then
         verify(reservationRepository,times(1)).delete(reservation);

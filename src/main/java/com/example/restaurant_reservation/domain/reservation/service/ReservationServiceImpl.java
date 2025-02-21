@@ -21,13 +21,10 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.desktop.PrintFilesEvent;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
-import static com.example.restaurant_reservation.domain.reservation.entity.QReservation.reservation;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -65,6 +62,12 @@ public class ReservationServiceImpl implements ReservationService{
         if (!reservationRequestDto.getReservationTime().equals(requestedTime)){
             throw new IllegalArgumentException("予約時間は1時間単位で設定してください。");
         }
+
+        //人数がテーブルの席より多くならないようにチェック
+        if (restaurantTable == null || reservationRequestDto.getNumPeople() > restaurantTable.getCapacity()){
+            throw new IllegalArgumentException("予約席をご確認をお願いします。");
+        }
+
         // 同じ時間帯に予約があるかチェック
         boolean isAlreadyReserved = reservationRepository.existsByRestaurantTableIdAndReservationTime(restaurantTable.getId(), requestedTime);
         if (isAlreadyReserved){
@@ -85,6 +88,9 @@ public class ReservationServiceImpl implements ReservationService{
         return reservationRepository.save(savedReservation).toResponse();
     }
 
+    /**
+     * 管理者ー予約作成
+     */
     @Override @Transactional
     public ReservationResponseDto AdminCreateReservation(AdminReservationRequestDto reservationRequestDto) {
         //controllerからもらったユーザを使う
@@ -93,6 +99,30 @@ public class ReservationServiceImpl implements ReservationService{
 
         RestaurantTable restaurantTable = restaurantTableRepository.findById(reservationRequestDto.getRestaurantTableId())
                 .orElseThrow(() -> new IllegalArgumentException("restaurantTableIdが見つかりません。"));
+
+        // 予約時間が現在の時刻より後かチェック
+        LocalDateTime now = reservationRequestDto.getReservationTime().truncatedTo(ChronoUnit.MINUTES);
+        if (reservationRequestDto.getReservationTime().isBefore(now)){
+            throw new IllegalArgumentException("予約時間は現在の時刻より後に設定してください。");
+        }
+
+        // 予約時間を1時間単位に制限
+        LocalDateTime requestedTime = reservationRequestDto.getReservationTime().truncatedTo(ChronoUnit.HOURS);
+        if (reservationRequestDto.getReservationTime().equals(requestedTime)){
+            throw new IllegalArgumentException("予約時間は1時間単位で設定してください。");
+        }
+
+        //人数がテーブルの席より多くならないようにチェック
+        if (restaurantTable == null || reservationRequestDto.getNumPeople() > restaurantTable.getCapacity()){
+            throw new IllegalArgumentException("予約席をご確認をお願いします。");
+        }
+
+        // 同じ時間帯に予約があるかチェック
+        boolean isAlreadyReserved = reservationRepository.existsByRestaurantTableIdAndReservationTime(restaurantTable.getId(), requestedTime);
+
+        if (isAlreadyReserved) {
+            throw new IllegalArgumentException("この時間帯にはすでに予約が入っています。");
+        }
 
         Reservation savedReservation = Reservation.builder()
                 .user(user)
