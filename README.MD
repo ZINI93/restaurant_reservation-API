@@ -41,7 +41,45 @@
 ```
 ---
 
-### 3.2. **会員機能**
+
+### 3.2. **管理者機能**
+
+#### **1) ユーザー検索**
+- **HTTPメソッド:** `GET`
+- **検索機能:** `名前`, `電話番号`
+- **URL:** `/user/search?username=test&name=parkjinhee&phone=08012345678&page=0&size=10`
+
+#### **2) ユーザー削除**
+- **HTTPメソッド:** `DELETE`
+- **URL:** `/api/admin/user/{userUuId}`
+
+#### **3) 管理者による手動予約**
+- **HTTPメソッド:** `POST`
+- **URL:** `/api/payment`
+
+**リクエスト本文:**
+```json
+{
+  "userId": "1",
+  "restaurantTableId": "2",
+  "reservationTime": "2025-02-24T22:55:56",
+  "numPeople": "5"
+}   
+```
+#### **4) 予約確認**
+- **HTTPメソッド:** `GET`
+- **照会機能:** `名前`, `電話番号`, `日付、時間`, `ステータス`
+- **URL:** `/reservation/search?name=jinhee&phone=080-1234-5678&startTime=2023-10-01T00:00:00&endTime=2023-10-31T23:59:59&status=COMPLETED&page=0&size=20&sortField=reservationTime`
+
+
+#### **5) 支払いの照会**
+- **HTTPメソッド:** `GET`
+- **照会機能:** `支払い状態`, `支払いID`
+- **URL:** `/payment/search?reservationId=1&status=COMPLETED&page=0&size=20&sort=paymentTime,desc`
+---
+
+
+### 3.3. **会員機能**
 
 #### **1) 会員登録**
 - **HTTPメソッド:** `POST`
@@ -76,7 +114,7 @@
 ```
 
 ---
-### 3.3. **予約機能**
+### 3.4. **予約機能**
 
 #### **1) 予約の登録**
 - **HTTPメソッド:** `POST`
@@ -109,7 +147,7 @@
 }
 ```
 ----
-### 3.4. **テーブル機能(管理者)**
+### 3.5. **テーブル機能(管理者)**
 
 #### **1) テーブルの追加**
 - **HTTPメソッド:** `POST`
@@ -145,7 +183,7 @@
 
 ---
 
-### 3.5. **決済機能**
+### 3.6. **決済機能**
 
 #### **1) 決済**
 - **HTTPメソッド:** `POST`
@@ -170,41 +208,7 @@
 
 ---
 
-### 3.6. **管理者機能**
 
-#### **1) ユーザー検索**
-- **HTTPメソッド:** `GET`
-- **検索機能:** `名前`, `電話番号`
-- **URL:** `/user/search?username=test&name=parkjinhee&phone=08012345678&page=0&size=10`
-
-#### **2) ユーザー削除**
-- **HTTPメソッド:** `DELETE`
-- **URL:** `/api/admin/user/{userUuId}`
-
-#### **3) 管理者による手動予約**
-- **HTTPメソッド:** `POST`
-- **URL:** `/api/payment`
-
-**リクエスト本文:**
-```json
-{
-  "userId": "1",
-  "restaurantTableId": "2",
-  "reservationTime": "2025-02-24T22:55:56",
-  "numPeople": "5"
-}   
-```
-#### **4) 予約確認**
-- **HTTPメソッド:** `GET`
-- **照会機能:** `名前`, `電話番号`, `日付、時間`, `ステータス`
-- **URL:** `/reservation/search?name=jinhee&phone=080-1234-5678&startTime=2023-10-01T00:00:00&endTime=2023-10-31T23:59:59&status=COMPLETED&page=0&size=20&sortField=reservationTime`
-
-
-#### **5) 支払いの照会**
-- **HTTPメソッド:** `GET`
-- **照会機能:** `支払い状態`, `支払いID`
-- **URL:** `/payment/search?reservationId=1&status=COMPLETED&page=0&size=20&sort=paymentTime,desc`
----
 
 テスト
 - **Postmanテスト:** `すべてのエンドポイントはPostmanを使用してテストをしました。`
