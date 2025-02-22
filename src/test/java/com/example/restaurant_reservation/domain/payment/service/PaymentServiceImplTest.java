@@ -9,14 +9,13 @@ import com.example.restaurant_reservation.domain.payment.entity.PaymentStatus;
 import com.example.restaurant_reservation.domain.payment.repository.PaymentRepository;
 import com.example.restaurant_reservation.domain.reservation.entity.Reservation;
 import com.example.restaurant_reservation.domain.reservation.repository.ReservationRepository;
-import org.hibernate.sql.ast.tree.expression.Any;
-import org.hibernate.sql.ast.tree.expression.CaseSimpleExpression;
+import com.example.restaurant_reservation.domain.user.entity.User;
+import com.example.restaurant_reservation.domain.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +23,7 @@ import org.springframework.data.domain.PageRequest;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -34,6 +34,7 @@ class PaymentServiceImplTest {
 
     @Mock PaymentRepository paymentRepository;
     @Mock ReservationRepository reservationRepository;
+    @Mock UserRepository userRepository;
     @InjectMocks PaymentServiceImpl paymentService;
 
     Payment payment;
@@ -41,6 +42,8 @@ class PaymentServiceImplTest {
     PaymentRequestDto requestDto;
 
     Reservation reservation;
+
+    User user;
 
     private void setId(Object entity, Long id) throws Exception {
         Field field = entity.getClass().getDeclaredField("id");
@@ -50,14 +53,20 @@ class PaymentServiceImplTest {
     @BeforeEach
     void setup() throws Exception {
 
-        reservation = Reservation.builder().build();
+        user = User.builder().build();
+        setId(user,1L);
+
+
+        reservation = Reservation.builder().user(user).build();
         setId(reservation,1L);
 
         payment = new Payment(
                 reservation,
                 new BigDecimal(10.10),
                 PaymentMethod.CASH,
-                PaymentStatus.COMPLETED
+                PaymentStatus.COMPLETED,
+                1L,
+                UUID.randomUUID().toString()
         );
 
         requestDto = PaymentRequestDto.builder()
@@ -71,11 +80,15 @@ class PaymentServiceImplTest {
     @Test
     void createPayment() {
         //given
-        when(reservationRepository.findById(1L)).thenReturn(Optional.ofNullable(reservation));
+
+        Long ownerId = user.getId();
+
+        when(reservationRepository.findById(reservation.getId())).thenReturn(Optional.ofNullable(reservation));
         when(paymentRepository.save(any(Payment.class))).thenReturn(payment);
 
+
         //when
-        PaymentResponseDto result = paymentService.createPayment(requestDto);
+        PaymentResponseDto result = paymentService.createPayment(ownerId,requestDto);
 
         //then
         assertNotNull(result);
@@ -86,21 +99,21 @@ class PaymentServiceImplTest {
 
     }
 
-    @Test
-    void findById() {
-        //given
-        when(paymentRepository.findById(1L)).thenReturn(Optional.ofNullable(payment));
-
-        //when
-
-        PaymentResponseDto result = paymentService.findById(1L);
-
-        //then
-        assertNotNull(result);
-        assertEquals(payment.getPaymentMethod(),result.getPaymentMethod());
-
-        verify(paymentRepository, times(1)).findById(1L);
-    }
+//    @Test
+//    void findByOwnerId() {
+//        //given
+//
+//        when(paymentRepository.findByOwnerId())
+//
+//        //when
+//        paymentService.findByOwnerId(user.getId());
+//
+//        //then
+//        assertNotNull(result);
+//        assertEquals(payment.getPaymentMethod(),result.getPaymentMethod());
+//
+//        verify(paymentRepository, times(1)).findByOwnerId(1L);
+//    }
 
     @Test
     void paymentSearch() {
@@ -132,7 +145,7 @@ class PaymentServiceImplTest {
                 .status(PaymentStatus.REFUNDED)
                 .build();
 
-        when(paymentRepository.findById(1L)).thenReturn(Optional.ofNullable(payment));
+        when(paymentRepository.findByOwnerId(1L)).thenReturn(Optional.ofNullable(payment));
         //when
         PaymentResponseDto result = paymentService.updatePayment(1L, updateDto);
         //then
@@ -144,10 +157,13 @@ class PaymentServiceImplTest {
     @Test
     void deletePayment() {
         //given
-        when(paymentRepository.findById(1L)).thenReturn(Optional.ofNullable(payment));
+
+        String uuid = UUID.randomUUID().toString();
+
+        when(paymentRepository.findByPaymentUuid(uuid)).thenReturn(Optional.ofNullable(payment));
 
         //when
-        paymentService.deletePayment(1L);
+        paymentService.deletePayment(uuid);
 
         //then
 

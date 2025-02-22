@@ -1,12 +1,13 @@
 CREATE TABLE `users` (
     `user_id`  BIGINT AUTO_INCREMENT PRIMARY KEY,
     `username` VARCHAR(255) NOT NULL UNIQUE,
-    `password` VARCHAR(255) NOT NULL,
+    `password` VARCHAR(255) NULL,
     `name`     VARCHAR(50)  NOT NULL,
     `email`    VARCHAR(255) NOT NULL UNIQUE,
-    `phone`    VARCHAR(20)  NOT NULL UNIQUE,
+    `phone`    VARCHAR(20)  NULL UNIQUE,
     `role`     VARCHAR(50)  NOT NULL,
     `user_uuid` VARCHAR(36) NOT NULL UNIQUE,
+    `provider` VARCHAR(50) NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
