@@ -1,7 +1,11 @@
 package com.example.restaurant_reservation.config;
 
 import com.example.restaurant_reservation.domain.user.entity.UserRole;
+import com.example.restaurant_reservation.domain.user.service.CustomUserDetailsService;
+import com.example.restaurant_reservation.security.CustomOAuth2UserService;
 import com.example.restaurant_reservation.security.JwtRequestFilter;
+import com.example.restaurant_reservation.security.OAuth2LoginFailureHandler;
+import com.example.restaurant_reservation.security.OAuth2LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,14 +22,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.awt.desktop.PrintFilesEvent;
+
 
 @RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
-public class SecurityConfig  {
+public class SecurityConfig {
 
-    private final UserDetailsService userDetailsService;
+
     private final JwtRequestFilter jwtRequestFilter;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -41,11 +51,11 @@ public class SecurityConfig  {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception{
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder
-                .userDetailsService(userDetailsService)
+                .userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
         return authenticationManagerBuilder.build();
     }
@@ -58,16 +68,26 @@ public class SecurityConfig  {
                 .headers((headerConfig) ->
                         headerConfig.frameOptions(frameOptionsConfig -> frameOptionsConfig.sameOrigin())
                 )
-                .authorizeHttpRequests((auth)-> auth
+                .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/authenticate").permitAll()
                         .requestMatchers("/api/join").permitAll()
                         .requestMatchers("/api/**").hasRole("USER")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                        .sessionManagement(session -> session
-                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                        );
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService)// OAuth2 사용자 정보 처리
+                        )
+                        .successHandler(oAuth2LoginSuccessHandler)  // 로그인 성공 후 처리
+                        .failureHandler(oAuth2LoginFailureHandler)  // 실패 핸들러 추가
+                        .permitAll() // OAuth2 로그인 경로는 모두 허용
+
+                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // JWT 기반으로 stateless 설정
+                        .sessionFixation().migrateSession()
+                );
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

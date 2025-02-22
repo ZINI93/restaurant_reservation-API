@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -55,5 +57,12 @@ public class UserApiController {
 
         return ResponseEntity.ok(user);
     }
+
+    //google login
+    @GetMapping
+    public ResponseEntity<?> getUser(@AuthenticationPrincipal OAuth2User user){
+        return ResponseEntity.ok(user.getAttributes());
+    }
+
 
 }

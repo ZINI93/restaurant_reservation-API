@@ -1,5 +1,15 @@
 
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id:
+            client-secret:
+            scope:
+              - profile
+              - email
   application:
     name: reservation_local
   datasource:

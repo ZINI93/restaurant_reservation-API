@@ -22,7 +22,7 @@ public class User extends TimeStamp {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password;
 
     @Column(nullable = false)
@@ -31,7 +31,7 @@ public class User extends TimeStamp {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = true)
     private String phone;
 
     @Enumerated(EnumType.STRING)
@@ -40,9 +40,10 @@ public class User extends TimeStamp {
     @Column(name = "user_uuid",nullable = false, updatable = false, unique = true)
     private String userUuid;
 
+    private String provider;  // 一般 login  - "local", GOOGLE login - "google"　
 
     @Builder
-    public User(String username, String password, String name, String email, String phone, UserRole role, String userUuid) {
+    public User(String username, String password, String name, String email, String phone, UserRole role, String userUuid, String provider) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -50,6 +51,7 @@ public class User extends TimeStamp {
         this.phone = phone;
         this.role = role;
         this.userUuid = UUID.randomUUID().toString();
+        this.provider = provider;
     }
 
     public UserResponseDto toResponse(){
