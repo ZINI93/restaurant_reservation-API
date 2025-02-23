@@ -26,7 +26,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         // OAuth2User에서 사용자 정보 가져오기
         CustomOAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
-        String email = oAuth2User.getName();
+        String email = oAuth2User.getEmail();
 
 
         // DB에서 사용자 정보 가져오기
@@ -39,15 +39,15 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         System.out.println("jwtToken = " + jwtToken);
 
         // JWT를 프론트엔드에 반환
-        response.setHeader("Authorization", "Bearer" + jwtToken);
+        response.setHeader("Authorization", "Bearer " + jwtToken);
 
-        // JSON 응답 본문에 토큰 포함 (선택 사항)
+        // JSON 응답 본문에 토큰 포함
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write("{\"token\": \"" + jwtToken + "\"}");
 
 
-        // 로그인 후 특정 URL로 리다이렉트 (필요하면 설정)
-        response.sendRedirect("/dashboard");
+        // 로그인 후 특정 URL로 리다이렉트
+//        response.sendRedirect("/dashboard");
     }
 }

@@ -28,7 +28,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
-
         // DefaultOAuth2UserService를 사용해 OAuth2User 로드
         OAuth2User oAuth2User = defaultOAuth2UserService.loadUser(userRequest);
 
@@ -41,7 +40,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .orElseGet(() -> {
                     //새로운 유저 생성
                     User newUser = User.builder()
-                            .username(email)
+                            .username("google_" + email)
                             .email(email)
                             .name(oAuth2User.getAttribute("name"))
                             .password(null)
@@ -53,6 +52,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 });
 
         // CustomOAuth2User 반환
-        return new CustomOAuth2User(user,attributes);
+        return new CustomOAuth2User(user, attributes);
     }
 }
