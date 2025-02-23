@@ -52,7 +52,8 @@ class UserServiceImplTest {
                 "qw@gmail.com",
                 "080-1234-1234",
                 UserRole.USER,
-                UUID.randomUUID().toString()
+                UUID.randomUUID().toString(),
+                "local"
         );
 
 
