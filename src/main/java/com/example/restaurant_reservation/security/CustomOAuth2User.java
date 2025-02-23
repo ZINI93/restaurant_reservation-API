@@ -31,6 +31,10 @@ public class CustomOAuth2User implements OAuth2User, UserDetails {
         return user.getEmail(); // OAuth2User의 "name"을 email로 설정
     }
 
+    public String getEmail(){
+        return user.getEmail();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
