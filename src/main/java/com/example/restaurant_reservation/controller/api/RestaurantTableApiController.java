@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RequiredArgsConstructor
-@RequestMapping("/admin/restaurant_table")
+@RequestMapping("/api/admin/restaurant_table")
 @RestController
 public class RestaurantTableApiController {
 
@@ -22,7 +22,7 @@ public class RestaurantTableApiController {
     public ResponseEntity<RestaurantTableResponseDto> createRestaurantTable(@RequestBody RestaurantTableRequestDto requestDto){
 
         RestaurantTableResponseDto table = tableService.createTable(requestDto);
-        URI location = URI.create("/api/restaurant_table/" + table.getId());
+        URI location = URI.create("/admin/restaurant_table/" + table.getId());
 
         return ResponseEntity.created(location).body(table);
     }
