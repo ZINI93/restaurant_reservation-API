@@ -25,6 +25,7 @@
 ## 2. **認証方式**
 - **認証方法:** `JWTトークン方式`
 - **トークン発行エンドポイント:** `/authenticate`
+- **Googleトークン発行エンドポイント:** `/api/auth/google`
 - **有効時間:** `10時間`
 - ----
 
@@ -49,7 +50,7 @@
 #### **1) ユーザー検索**
 - **HTTPメソッド:** `GET`
 - **検索機能:** `名前`, `電話番号`
-- **URL:** `/user/search?username=test&name=parkjinhee&phone=08012345678&page=0&size=10`
+- **URL:** `/api/admin/user/search?username=test&name=parkjinhee&phone=08012345678&page=0&size=10`
 
 #### **2) ユーザー削除**
 - **HTTPメソッド:** `DELETE`
@@ -57,7 +58,7 @@
 
 #### **3) 管理者による手動予約**
 - **HTTPメソッド:** `POST`
-- **URL:** `/api/payment`
+- **URL:** `/api/admin/reservation`
 
 **リクエスト本文:**
 ```json
@@ -71,13 +72,13 @@
 #### **4) 予約確認**
 - **HTTPメソッド:** `GET`
 - **照会機能:** `名前`, `電話番号`, `日付、時間`, `ステータス`
-- **URL:** `/reservation/search?name=jinhee&phone=080-1234-5678&startTime=2023-10-01T00:00:00&endTime=2023-10-31T23:59:59&status=COMPLETED&page=0&size=20&sortField=reservationTime`
+- **URL:** `/api/admin/reservation/search?name=jinhee&phone=080-1234-5678&startTime=2023-10-01T00:00:00&endTime=2023-10-31T23:59:59&status=COMPLETED&page=0&size=20&sortField=reservationTime`
 
 
 #### **5) 支払いの照会**
 - **HTTPメソッド:** `GET`
 - **照会機能:** `支払い状態`, `支払いID`
-- **URL:** `/payment/search?reservationId=1&status=COMPLETED&page=0&size=20&sort=paymentTime,desc`
+- **URL:** `/api/admin/payment/search?reservationId=1&status=COMPLETED&page=0&size=20&sort=paymentTime,desc`
 ---
 
 
@@ -153,14 +154,13 @@
 
 #### **1) テーブルの追加**
 - **HTTPメソッド:** `POST`
-- **URL:** `/admin/restaurant_table`
+- **URL:** `/api/admin/restaurant_table`
 
 **リクエスト本文:**
 ```json
 {
   "tableNumber": "1",
-  "capacity": "5",
-  "isAvailable": true
+  "capacity": "5"
 }
 ```
 #### **2) テーブルの照会**
@@ -300,7 +300,7 @@
   "password": "12341234",
   "name": "jinhee",
   "email": "aa@gmail.com",
-  "phone": "080-1111-1111",
+  "phone": "080-1111-1111"
 }
 ```
 
