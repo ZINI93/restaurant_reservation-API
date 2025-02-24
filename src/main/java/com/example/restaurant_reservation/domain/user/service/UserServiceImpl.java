@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
                 .name(RequestDto.getName())
                 .email(RequestDto.getEmail())
                 .phone(RequestDto.getPhone())
+                .provider("local")
                 .role(UserRole.USER)
                 .build();
 
