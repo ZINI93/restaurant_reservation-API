@@ -4,21 +4,22 @@ spring:
       client:
         registration:
           google:
-            client-id:
-            client-secret:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
             scope:
               - profile
               - email
   application:
     name: reservation_local
   datasource:
-    url: jdbc:mysql://localhost:3308/reservation_local?zeroDateTimeBehavior=convertToNull&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-    username: reservation_local_user
-    password: 251001
+    url: jdbc:mysql://localhost:3308/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 20
   batch:
     jdbc:
       initialize-schema: always
-
+jwt:
+  secret: ${JWT_SECRET_KEY}
