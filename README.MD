@@ -71,13 +71,13 @@
 ```
 #### **4) 予約確認**
 - **HTTPメソッド:** `GET`
-- **照会機能:** `名前`, `電話番号`, `日付、時間`, `ステータス`
+- **検索機能:** `名前`, `電話番号`, `日付、時間`, `ステータス`
 - **URL:** `/api/admin/reservation/search?name=jinhee&phone=080-1234-5678&startTime=2023-10-01T00:00:00&endTime=2023-10-31T23:59:59&status=COMPLETED&page=0&size=20&sortField=reservationTime`
 
 
 #### **5) 支払いの照会**
 - **HTTPメソッド:** `GET`
-- **照会機能:** `支払い状態`, `支払いID`
+- **検索機能:** `支払い状態`, `支払いID`
 - **URL:** `/api/admin/payment/search?reservationId=1&status=COMPLETED&page=0&size=20&sort=paymentTime,desc`
 ---
 
@@ -100,6 +100,7 @@
 ```
 #### **2) 会員情報の取得**
 - **HTTPメソッド:** `GET`
+- **検索機能:**　`ユーザー情報`
 - **URL:** `/api/users/me`
 
 #### **3) 会員情報の更新**
@@ -135,6 +136,7 @@
 
 #### **2) 予約の確認**
 - **HTTPメソッド:** `GET`
+- - **検索機能:**　`ユーザーの予約情報`
 - **URL:** `/api/reservation/me`
 
 #### **3) 予約の修正**
@@ -165,6 +167,8 @@
 ```
 #### **2) テーブルの照会**
 - **HTTPメソッド:** `GET`
+- **検索機能:**　`テーブルの情報`
+
 - **URL:** `/api/admin/restaurant_table/{tableId}`
 
 #### **3) テーブルの修正**
@@ -201,6 +205,7 @@
 ```
 #### **2) 決済情報の取得**
 - **HTTPメソッド:** `GET`
+- - **検索機能:**　`ユーザーのお支払い情報`
 - **URL:** `/api/payment/me`
 
 
