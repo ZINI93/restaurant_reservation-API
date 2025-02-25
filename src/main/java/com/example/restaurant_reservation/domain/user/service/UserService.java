@@ -15,7 +15,7 @@ public interface UserService {
     UserResponseDto findByUserUuId(String uuid);
     Page<UserResponseDto> SearchUser(String username, String name , String phone, Pageable pageable);
 
-    UserResponseDto updateUser(Long userId, UserUpdateDto updateDto);
+    UserResponseDto updateUser(String userUuid, UserUpdateDto updateDto);
 
     void deleteUser(String uuid);
 

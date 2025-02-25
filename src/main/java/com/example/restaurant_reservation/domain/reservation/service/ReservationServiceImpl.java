@@ -9,6 +9,7 @@ import com.example.restaurant_reservation.domain.reservation.dto.ReservationUpda
 import com.example.restaurant_reservation.domain.reservation.entity.Reservation;
 import com.example.restaurant_reservation.domain.reservation.entity.ReservationStatus;
 import com.example.restaurant_reservation.domain.reservation.repository.ReservationRepository;
+import com.example.restaurant_reservation.domain.reservation.repository.ReservationRepositoryCustom;
 import com.example.restaurant_reservation.domain.restaurantTable.entity.RestaurantTable;
 import com.example.restaurant_reservation.domain.restaurantTable.repository.RestaurantTableRepository;
 import com.example.restaurant_reservation.domain.user.entity.User;
@@ -193,15 +194,14 @@ public class ReservationServiceImpl implements ReservationService{
 
     // 予約をアップデート
     @Override @Transactional
-    public ReservationResponseDto updateReservation(Long userId, ReservationUpdateDto updateDto) {
+    public ReservationResponseDto updateReservation(String userUuid, String reservationUuid, ReservationUpdateDto updateDto) {
 
-
-        //予約の情報からユーザーのIDを持ってくる
-        Reservation reservation = reservationRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("予約 ID が見つかりません。"));
+        // 指定された予約IDの予約情報を取得
+        Reservation reservation = reservationRepository.findByReservationUuid(reservationUuid)
+                .orElseThrow(() -> new IllegalArgumentException("指定された予約IDの予約が見つかりません。"));
 
         //ユーザーが存在しているかCHECK
-        if (reservation.getUser() == null || !Objects.equals(reservation.getUser().getId(),userId)){
+        if (reservation.getUser() == null || !Objects.equals(reservation.getUser().getUserUuid(), userUuid)){
             throw new AccessDeniedException("指定されたIDに対するアクセス権がありません。");
         }
 

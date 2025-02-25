@@ -5,6 +5,7 @@ import com.example.restaurant_reservation.domain.reservation.dto.ReservationResp
 import com.example.restaurant_reservation.domain.reservation.dto.ReservationUpdateDto;
 import com.example.restaurant_reservation.domain.reservation.service.ReservationService;
 import com.example.restaurant_reservation.domain.user.service.CustomUserDetails;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +29,7 @@ public class ReservationApiController {
      *
      */
     @PostMapping
-    public ResponseEntity<ReservationResponseDto> createReservation(@RequestBody ReservationRequestDto requestDto,
+    public ResponseEntity<ReservationResponseDto> createReservation(@Valid @RequestBody ReservationRequestDto requestDto,
                                                                     Authentication authentication){
 
         // CONTROLLER から、ユーザのIDを設定する
@@ -59,14 +60,15 @@ public class ReservationApiController {
     /**
      *  予約をアップデート
      */
-    @PutMapping("/update")
-    public ResponseEntity<ReservationResponseDto> updateReservation(@RequestBody ReservationUpdateDto updateDto,
+    @PutMapping("{reservationUuid}")
+    public ResponseEntity<ReservationResponseDto> updateReservation(@Valid @RequestBody ReservationUpdateDto updateDto,
+                                                                    @PathVariable String reservationUuid,
                                                                     Authentication authentication){
         // 現在ログインしているユーザー情報を取得する
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        Long userId = customUserDetails.getUserId();
+        String userUuid = customUserDetails.getUserUuid();
 
-        ReservationResponseDto reservation = reservationService.updateReservation(userId, updateDto);
+        ReservationResponseDto reservation = reservationService.updateReservation(userUuid, reservationUuid, updateDto);
 
         return ResponseEntity.ok(reservation);
     }

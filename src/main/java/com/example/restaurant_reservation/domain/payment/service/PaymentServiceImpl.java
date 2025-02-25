@@ -120,14 +120,15 @@ public class PaymentServiceImpl implements PaymentService{
      * お支払いをアップデート
      */
     @Override @Transactional
-    public PaymentResponseDto updatePayment(Long userId, PaymentUpdateDto updateDto) {
+    public PaymentResponseDto updatePayment(Long userId,String paymentUuid, PaymentUpdateDto updateDto) {
 
         log.info("updating Payment for user ID :{}",userId);
-        Payment payment = paymentRepository.findByOwnerId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("ユーザーIDに該当するお支払いが見つかりません。"));
+
+        Payment payment = paymentRepository.findByPaymentUuid(paymentUuid)
+                .orElseThrow(() -> new IllegalArgumentException("指定されたお支払いIDの予約が見つかりません。"));
 
         // ユーザーIDが一致するか確認
-        if (payment.getOwnerId() == null || !Objects.equals(payment.getOwnerId(), userId)){
+        if (!Objects.equals(payment.getOwnerId(), userId)){
             throw new AccessDeniedException("指定されたIDに対するアクセス権がありません。");
         }
 
