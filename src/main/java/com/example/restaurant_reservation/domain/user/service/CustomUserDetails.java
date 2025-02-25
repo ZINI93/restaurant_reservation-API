@@ -26,8 +26,7 @@ public class CustomUserDetails implements UserDetails {
     public String getPhone(){
         return user.getPhone();
     }
-
-
+    public String getUserUuid(){ return user.getUserUuid();}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

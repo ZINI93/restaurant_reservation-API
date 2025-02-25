@@ -69,9 +69,10 @@ public class UserServiceImpl implements UserService {
 
     //ユーザー情報をアップデート
     @Override @Transactional
-    public UserResponseDto updateUser(Long userId, UserUpdateDto updateDto) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("ユーザーのＩＤが見つかりません。"));
+    public UserResponseDto updateUser(String userUuid, UserUpdateDto updateDto) {
+
+        User user = userRepository.findByUserUuid(userUuid)
+                .orElseThrow(() -> new IllegalArgumentException("ユーザーIDに該当するユーザーが見つかりません。"));
 
         //  비밀번호 변경하지 않을때 기존 값 유지
         String encodedPassword = updateDto.getPassword() != null

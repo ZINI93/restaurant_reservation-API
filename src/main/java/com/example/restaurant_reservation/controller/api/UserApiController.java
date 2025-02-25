@@ -5,6 +5,7 @@ import com.example.restaurant_reservation.domain.user.dto.UserResponseDto;
 import com.example.restaurant_reservation.domain.user.dto.UserUpdateDto;
 import com.example.restaurant_reservation.domain.user.service.CustomUserDetails;
 import com.example.restaurant_reservation.domain.user.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -25,7 +26,7 @@ public class UserApiController {
 
     // アカウント作成 .
     @PostMapping("/join")
-    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto requestDto){
+    public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserRequestDto requestDto){
         UserResponseDto user = userService.createUser(requestDto);
         URI location = URI.create("/api/user/" + user.getId());
 
@@ -47,13 +48,13 @@ public class UserApiController {
 
     // ユーザーをアップデート
     @PutMapping("/users/update")
-    public ResponseEntity<UserResponseDto> updateUser(@RequestBody UserUpdateDto updateDto,
+    public ResponseEntity<UserResponseDto> updateUser(@Valid @RequestBody UserUpdateDto updateDto,
                                                       Authentication authentication) {
         // 本人以外のIDはアクセス不可
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        Long userId = customUserDetails.getUserId();
+        String userUuid = customUserDetails.getUserUuid();
 
-        UserResponseDto user = userService.updateUser(userId, updateDto);
+        UserResponseDto user = userService.updateUser(userUuid, updateDto);
 
         return ResponseEntity.ok(user);
     }
