@@ -50,10 +50,10 @@ public class AdminApiController {
     }
 
     //ユーザーを削除
-    @DeleteMapping("/users/{UserUuid}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String UserUuid){
+    @DeleteMapping("/users/{userUuid}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String userUuid){
 
-        userService.deleteUser(UserUuid);
+        userService.deleteUser(userUuid);
 
         return ResponseEntity.noContent().build();
     }
