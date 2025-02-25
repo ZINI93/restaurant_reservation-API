@@ -141,7 +141,7 @@
 
 #### **3) 予約の修正**
 - **HTTPメソッド:** `PUT`
-- **URL:** `/api/reservation/update`
+- **URL:** `/api/reservation/{reservationUuid}`
 
 **リクエスト本文:**
 ```json
@@ -208,6 +208,18 @@
 - **検索機能:**　`ユーザーのお支払い情報`
 - **URL:** `/api/payment/me`
 
+#### **3) お支払いの修正**
+- **HTTPメソッド:** `PUT`
+- **URL:** `/api/payment/{paymentUuid}`
+
+**リクエスト本文:**
+```json
+{
+  "reservationId": "1",
+  "amount": "1000.00",
+  "paymentMethod": "CASH"
+}
+```
 
 #### **3) 決済削除**
 - **HTTPメソッド:** `DELETE`
