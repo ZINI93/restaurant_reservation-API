@@ -151,8 +151,6 @@ public class PaymentServiceImpl implements PaymentService{
         Payment payment = paymentRepository.findByPaymentUuid(uuid)
                 .orElseThrow(() -> new IllegalArgumentException("ユーザーIDに該当するお支払いが見つかりません。"));
 
-        
-
         paymentRepository.delete(payment);
         log.info("Successfully deleted payment for user ID: {}", uuid);
     }
