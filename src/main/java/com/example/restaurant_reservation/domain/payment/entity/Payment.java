@@ -44,7 +44,7 @@ public class Payment extends TimeStamp {
     private String paymentUuid;
 
     @Builder
-    public Payment(Reservation reservation, BigDecimal amount, PaymentMethod paymentMethod, PaymentStatus status, Long ownerId, String uuid) {
+    public Payment(Reservation reservation, BigDecimal amount, PaymentMethod paymentMethod, PaymentStatus status, Long ownerId, String paymentUuid) {
         this.reservation = reservation;
         this.amount = amount;
         this.paymentMethod = paymentMethod;
