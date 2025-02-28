@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/admin/restaurant_table")
+@RequestMapping("/api/admin/restaurant_tables")
 @RestController
 public class RestaurantTableApiController {
 

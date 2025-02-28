@@ -50,11 +50,11 @@
 #### **1) ユーザー検索**
 - **HTTPメソッド:** `GET`
 - **検索機能:** `名前`, `電話番号`
-- **URL:** `/api/admin/user/search?username=test&name=parkjinhee&phone=08012345678&page=0&size=10`
+- **URL:** `/api/admin/users/search?username=test&name=parkjinhee&phone=08012345678&page=0&size=10`
 
 #### **2) ユーザー削除**
 - **HTTPメソッド:** `DELETE`
-- **URL:** `/api/admin/user/{userUuId}`
+- **URL:** `/api/admin/users/{userUuId}`
 
 #### **3) 管理者による手動予約**
 - **HTTPメソッド:** `POST`
@@ -72,13 +72,13 @@
 #### **4) 予約確認**
 - **HTTPメソッド:** `GET`
 - **検索機能:** `名前`, `電話番号`, `日付、時間`, `ステータス`
-- **URL:** `/api/admin/reservation/search?name=jinhee&phone=080-1234-5678&startTime=2023-10-01T00:00:00&endTime=2023-10-31T23:59:59&status=COMPLETED&page=0&size=20&sortField=reservationTime`
+- **URL:** `/api/admin/reservations/search?name=jinhee&phone=080-1234-5678&startTime=2023-10-01T00:00:00&endTime=2023-10-31T23:59:59&status=COMPLETED&page=0&size=20&sortField=reservationTime`
 
 
 #### **5) 支払いの照会**
 - **HTTPメソッド:** `GET`
 - **検索機能:** `支払い状態`, `支払いID`
-- **URL:** `/api/admin/payment/search?reservationId=1&status=COMPLETED&page=0&size=20&sort=paymentTime,desc`
+- **URL:** `/api/admin/payments/search?reservationId=1&status=COMPLETED&page=0&size=20&sort=paymentTime,desc`
 ---
 
 
@@ -122,7 +122,7 @@
 
 #### **1) 予約の登録**
 - **HTTPメソッド:** `POST`
-- **URL:** `/api/reservation`
+- **URL:** `/api/reservations`
 - **注意点:** `予約はテーブルごとに1時間単位で可能です。`
 
 **リクエスト本文:**
@@ -137,11 +137,11 @@
 #### **2) 予約の確認**
 - **HTTPメソッド:** `GET`
 - **検索機能:**　`ユーザーの予約情報`
-- **URL:** `/api/reservation/me`
+- **URL:** `/api/reservations/me`
 
 #### **3) 予約の修正**
 - **HTTPメソッド:** `PUT`
-- **URL:** `/api/reservation/{reservationUuid}`
+- **URL:** `/api/reservations/{reservationUuid}`
 
 **リクエスト本文:**
 ```json
@@ -156,7 +156,7 @@
 
 #### **1) テーブルの追加**
 - **HTTPメソッド:** `POST`
-- **URL:** `/api/admin/restaurant_table`
+- **URL:** `/api/admin/restaurant_tables`
 
 **リクエスト本文:**
 ```json
@@ -169,11 +169,11 @@
 - **HTTPメソッド:** `GET`
 - **検索機能:**　`テーブルの情報`
 
-- **URL:** `/api/admin/restaurant_table/{tableId}`
+- **URL:** `/api/admin/restaurant_tables/{tableId}`
 
 #### **3) テーブルの修正**
 - **HTTPメソッド:** `PUT`
-- **URL:** `/api/admin/restaurant_table/{tableId}`
+- **URL:** `/api/admin/restaurant_tables/{tableId}`
 
 **リクエスト本文:**
 ```json
@@ -185,7 +185,7 @@
 ```
 #### **4) テーブルの削除**
 - **HTTPメソッド:** `DELETE`
-- **URL:** `/api/admin/restaurant_table/{tableId}`
+- **URL:** `/api/admin/restaurant_tables/{tableId}`
 
 ---
 
@@ -193,7 +193,7 @@
 
 #### **1) 決済**
 - **HTTPメソッド:** `POST`
-- **URL:** `/api/payment`
+- **URL:** `/api/payments`
 
 **リクエストボディ:**
 ```json
@@ -206,11 +206,11 @@
 #### **2) 決済情報の取得**
 - **HTTPメソッド:** `GET`
 - **検索機能:**　`ユーザーのお支払い情報`
-- **URL:** `/api/payment/me`
+- **URL:** `/api/payments/me`
 
 #### **3) お支払いの修正**
 - **HTTPメソッド:** `PUT`
-- **URL:** `/api/payment/{paymentUuid}`
+- **URL:** `/api/payments/{paymentUuid}`
 
 **リクエスト本文:**
 ```json
@@ -223,7 +223,7 @@
 
 #### **3) 決済削除**
 - **HTTPメソッド:** `DELETE`
-- **URL:** `/api/payment/{paymentUuid}`
+- **URL:** `/api/payments/{paymentUuid}`
 
 ---
 

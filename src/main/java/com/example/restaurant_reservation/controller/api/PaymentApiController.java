@@ -20,7 +20,7 @@ import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/api/payment")
+@RequestMapping("/api/payments")
 @RestController
 public class PaymentApiController {
 
