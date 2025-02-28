@@ -39,7 +39,7 @@ public class AdminApiController {
      */
 
     // USERをサーチ　（USERNAME,NAME,PHONE)　
-    @GetMapping("/user/search")  //?page=0&size=10
+    @GetMapping("/users/search")  //?page=0&size=10
     public ResponseEntity<Page<UserResponseDto>> searchUser(@RequestParam(required = false) String username,
                                                             @RequestParam(required = false) String name,
                                                             @RequestParam(required = false)String phone,
@@ -63,7 +63,7 @@ public class AdminApiController {
      */
 
     //予約を作る
-    @PostMapping("reservation")
+    @PostMapping("reservations")
     public ResponseEntity<ReservationResponseDto> createReservation(@RequestBody AdminReservationRequestDto requestDto,
                                                                     Authentication authentication){
 
@@ -78,7 +78,7 @@ public class AdminApiController {
      *  予約のサーチ
      *  search : 名前、電話番号、予約時間、ステータス
      */
-    @GetMapping("/reservation/search")
+    @GetMapping("/reservations/search")
     public ResponseEntity<Page<ReservationResponseDto>> searchReservation(@RequestParam(required = false) String name,
                                                                           @RequestParam(required = false) String phone,
                                                                           @RequestParam(required = false) LocalDateTime startTime,
@@ -96,7 +96,7 @@ public class AdminApiController {
     /**
      * 予約を削除
      */
-    @DeleteMapping("/reservation/{reservationUuid}")
+    @DeleteMapping("/reservations/{reservationUuid}")
     public ResponseEntity<Void> deleteReservation(@PathVariable String reservationUuid,
                                                   Authentication authentication){
 
@@ -115,7 +115,7 @@ public class AdminApiController {
     }
 
     //PAYMENT - ADMIN
-    @GetMapping("/payment/search")
+    @GetMapping("/payments/search")
     public ResponseEntity<Page<PaymentResponseDto>>paymentSearch(@RequestParam(required = false) Long reservationId,
                                                                  @RequestParam(required = false) PaymentStatus status,
                                                                  @RequestParam(required = false) Pageable pageable){
