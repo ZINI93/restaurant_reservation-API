@@ -62,8 +62,9 @@ class ReservationServiceImplTest {
     @BeforeEach
     void setup() throws Exception {
 
-        user = User.builder().build();
+        user = User.builder().userUuid(UUID.randomUUID().toString()).build();
         setId(user,1L);
+
 
 
         table = RestaurantTable.builder().capacity(10).build();
@@ -178,7 +179,7 @@ class ReservationServiceImplTest {
         when(reservationRepository.findByUserId(1L)).thenReturn(Optional.ofNullable(reservation));
 
         //when
-        ReservationResponseDto result = reservationService.updateReservation(1L, updateReservation);
+        ReservationResponseDto result = reservationService.updateReservation(user.getUserUuid(),reservation.getReservationUuid(), updateReservation);
 
         //then
         assertNotNull(result);

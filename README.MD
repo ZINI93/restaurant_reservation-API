@@ -58,7 +58,7 @@
 
 #### **3) 管理者による手動予約**
 - **HTTPメソッド:** `POST`
-- **URL:** `/api/admin/reservation`
+- **URL:** `/api/admin/reservations`
 
 **リクエスト本文:**
 ```json
